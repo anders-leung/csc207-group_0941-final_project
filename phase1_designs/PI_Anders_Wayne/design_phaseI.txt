@@ -1,0 +1,28 @@
+Nurse
+* Interacts with Patient List, Patient Data, Vital Signs, and Symptoms.
+* Nurses are users of this application who can perform many actions in this app. 
+* After launching the application and logging in, nurses have access to all saved data.
+* Nurses can add and edit patient data, providing the patient's name, birthdate, health card number, vital signs, and a description of their symptoms.  
+* Each time a patient's vital signs and symptoms have been updated, there will be a time stamp to keep track of the patient's status over time. 
+* Nurses can log whether or not a patient has been seen by a doctor, mentioning the time if said patient has been seen by a doctor.
+* Nurses can find a pull up all recorded data of a patient using the patient's health card number.
+* Nurses can organize the list of patients based on decreasing urgency or by their time of arrivals.
+Patient List
+* Interacts with Nurse, and Patient Data.
+* A list that contains all the data of the patients.
+* This list can be sorted by the patients' urgency, organized in decreasing urgency based on the number of points.
+* This list can also be sorted by the patients' times of arrival (least recent to most recent).
+* A patient can be found within this list by providing the patients health card number.
+Patient Data
+* Interacts with Nurse, Patient List, Vital Signs, and Symptoms.
+* Each patient has a name, birthdate, and time of arrival.
+* Each patient has a record of their vital signs, including temperature, blood pressure, and heart rate and the time the vital signs were recorded.
+* Each patient has a description of their symptoms and a time at which the symptoms were last recorded.
+* Each patient has a record of whether or not they were seen by a doctor, and if so, the mention of the date and time.
+* Each patient has a number of points that describe the patients urgency based on the patient's temperature, blood pressure, and heart rate
+Vital Signs
+* Interacts with Patient Data and Nurse
+* Has attributes temperature, blood pressure, and heart rate and the time the vital signs were recorded.
+Symptoms
+* Interacts with Patient Data and Nurse.
+* A text description that describes the symptoms of a patient and the time of which it was recorded.
