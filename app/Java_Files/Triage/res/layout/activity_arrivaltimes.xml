@@ -15,23 +15,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:textSize="20dp"
-        android:text="test" />
+        android:text="Past arrival times here" />
 
     <Button
-        android:id="@+id/buttonPastvitals"
+        android:id="@+id/buttonVitaltimes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="View Past Vitals" />
-
-    <EditText
-        android:id="@+id/editTextArrivalinfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonPastvitals"
-        android:layout_alignLeft="@+id/textView1"
-        android:ems="7" />
+        android:text="View Vital Times" />
 
 
     <TextView
@@ -40,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/editTextArrivalinfo"
         android:layout_alignRight="@+id/buttonPastvitals"
-        android:text="Input desired arrival time to view patient&apos;s information."
+        android:text="Input desired arrival time to view past vital times."
         android:textSize="20dp" />
 
     <Button
@@ -49,6 +41,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:onClick="goBack"
         android:text="Back" />
+
+    <EditText
+        android:id="@+id/editTextArrivalinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonVitaltimes"
+        android:layout_alignLeft="@+id/buttonBack"
+        android:ems="7" />
 
 </RelativeLayout>

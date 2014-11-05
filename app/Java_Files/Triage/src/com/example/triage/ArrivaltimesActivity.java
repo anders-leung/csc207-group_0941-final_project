@@ -2,7 +2,9 @@ package com.example.triage;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 
 public class ArrivaltimesActivity extends Activity {
 
@@ -19,4 +21,8 @@ public class ArrivaltimesActivity extends Activity {
 		return true;
 	}
 
+	public void goBack(View v) {
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
+	}	
 }

@@ -9,7 +9,7 @@
     tools:context=".MainActivity" >
 
     <EditText
-        android:id="@+id/healthcardnum"
+        android:id="@+id/editHealthcardnum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -22,8 +22,9 @@
         android:id="@+id/buttonLookup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/healthcardnum"
-        android:layout_below="@+id/healthcardnum"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/editHealthcardnum"
+        android:onClick="lookupPatient"
         android:text="Look Up Patient" />
 
 </RelativeLayout>

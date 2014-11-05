@@ -15,14 +15,23 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:textSize="20dp"
-        android:text="Past vital info here" />
+        android:text="Past vital times here" />
 
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="goBack"
         android:text="Back" />
+
+    <EditText
+        android:id="@+id/editTextVitaltime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonBack"
+        android:layout_alignLeft="@+id/buttonBack"
+        android:ems="10" />
 
 </RelativeLayout>

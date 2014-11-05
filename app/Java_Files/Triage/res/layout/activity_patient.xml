@@ -206,12 +206,12 @@
         android:textSize="20dp" />
 
     <Button
-        android:id="@+id/buttonPastvitals"
+        android:id="@+id/buttonPastarrivaltimes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="View Past Vitals" />
+        android:text="View Arrival Times" />
 
     <Button
         android:id="@+id/buttonSave"
@@ -226,8 +226,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/buttonPastvitals"
-        android:layout_alignBottom="@+id/buttonPastvitals"
         android:layout_toLeftOf="@+id/buttonPastvitals"
+        android:layout_marginRight="5dp"
         android:onClick="goBack"
         android:text="Back" />
 

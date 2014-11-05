@@ -5,14 +5,37 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
+import android.widget.TextView;
 
 public class PatientActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Intent intent = getIntent();
+		String healthcardnum = intent.getStringExtra(MainActivity.HEALTHCARDNUM);
+		// method for patient info here
+		// String name =
+		// String dob =
+		
+		TextView textViewName = (TextView) findViewById(R.id.textViewName);
+		textViewName.setText(name);
+		
+		TextView textViewDob = (TextView) findViewById(R.id.textViewDob);
+		textViewName.setText(dob);
+		
+		TextView textViewHealthcardnum = (TextView) findViewById(R.id.textViewHealthcardnum);
+		textViewName.setText(healthcardnum);
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		setContentView(R.layout.activity_patient);
-
 	}
 
 	@Override
@@ -22,6 +45,8 @@ public class PatientActivity extends Activity {
 		return true;
 	}
 	
-	public void goBack(View v) {
+	public void goBack() {
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
 	}
 }
