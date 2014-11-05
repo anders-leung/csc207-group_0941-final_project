@@ -24,7 +24,8 @@ public class PatientTest {
 	@Before
 	public void setUp() throws Exception {
 		testPatient = new Patient("Vijay Vazirani", "1994-03-12",
-				"452133", "12:45", 40.0, 160, 75);
+				"452133");
+		this.testPatient.setVitalsigns("12:45", "12:50", 40.0, 160, 75);
 	}
 	
 	/**
@@ -50,27 +51,7 @@ public class PatientTest {
 		expected = "452133";
 		assertTrue(expected.equals(this.testPatient.hcn));
 		expected = "12:45";
-		assertTrue(expected.equals(this.testPatient.toa));
-	}
-	
-	/**
-	 * Tests that equals() returns true when comparing testPatient to
-	 * itself.
-	 */
-	@Test
-	public void testEqualsPatientTrue() {
-		assertEquals(true, this.testPatient.equals(testPatient));
-	}
-	
-	/**
-	 * Tests that equals() returns false when comparing testPatient to
-	 * a different Patient.
-	 */
-	@Test
-	public void testEqualsPatientFalse() {
-		Patient compare = new Patient("Jie Wu", "1992-10-12", "324231",
-				"1:45", 40.0, 160, 75);
-		assertEquals(false, this.testPatient.equals(compare));
+		assertTrue(this.testPatient.getVitalsigns().containsKey(expected));
 	}
 	
 	/**
@@ -85,7 +66,7 @@ public class PatientTest {
 		expected.add(160);
 		expected.add(75);
 		assertEquals(expected, 
-				this.testPatient.getVitalsigns().get(this.testPatient.toa));
+				this.testPatient.getVitalsigns().get("12:45").get("12:50"));
 	}
 	
 	/**
@@ -94,13 +75,13 @@ public class PatientTest {
 	 */
 	@Test
 	public void testSetVitalsigns() {
-		this.testPatient.setVitalsigns("1:30", 35.5, 120, 90);
+		this.testPatient.setVitalsigns("1:30", "1:32", 35.5, 120, 90);
 		ArrayList<Number> expected = new ArrayList<Number>();
 		expected.add(35.5);
 		expected.add(120);
 		expected.add(90);
 		assertEquals(expected, 
-				this.testPatient.getVitalsigns().get("1:30"));
+				this.testPatient.getVitalsigns().get("1:30").get("1:32"));
 	}
 
 }

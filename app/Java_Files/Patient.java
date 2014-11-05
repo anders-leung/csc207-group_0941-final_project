@@ -20,41 +20,24 @@ public class Patient {
 	protected String hcn;
 	protected String name;
 	protected String dob;
-	protected String toa;
 	
 	/**
 	 * A list that takes a list of numbers that represent the temperature,
 	 * blood pressure and heart rate of the patient.
 	 */
-	private Map<String, ArrayList<Number>> vitalsigns;
+	private Map<String, Map<String, ArrayList<Number>>> vitalsigns;
 	
 	/**
 	 * Constructs Patient with identifier "hcn" final attributes like
 	 * name, date of birth, and time of arrival and mutable attributes
 	 * under vital signs.
 	 */
-	public Patient(String Name, String DoB, String HCN, String ToA, 
-			double temp, int bloodpressure, int heartrate) {
+	public Patient(String Name, String DoB, String HCN) {
 		this.name = Name;
 		this.dob = DoB;
 		this.hcn = HCN;
-		this.toa = ToA;
-		this.vitalsigns = new HashMap<String, ArrayList<Number>>();
-		this.setVitalsigns(ToA, temp, bloodpressure, heartrate);
-	}
-	
-	/**
-	 * Takes a patient and returns true iff the health card numbers
-	 * are the same for both patients.
-	 * 
-	 * @param patient
-	 * 			- another patient
-	 * @return - whether patient has the same health card number.
-	 */
-	public boolean equals(Patient patient) {
-		if (!(patient instanceof Patient))
-			return false;
-		return patient.hcn == this.hcn;
+		this.vitalsigns = 
+				new HashMap<String, Map<String, ArrayList<Number>>>();
 	}
 	
 	/**
@@ -64,7 +47,7 @@ public class Patient {
 	 * 
 	 * @return - a list of all the collected data.
 	 */
-	public Map<String, ArrayList<Number>> getVitalsigns() {
+	public Map<String, Map<String, ArrayList<Number>>> getVitalsigns() {
 		return vitalsigns;
 	}
 	
@@ -79,12 +62,23 @@ public class Patient {
 	 * @param heartrate
 	 * 			- the heart rate of the patient
 	 */
-	public void setVitalsigns(String ToA, double temp, 
+	public void setVitalsigns(String ToA, String vitaltime, double temp, 
 			int bloodpressure, int heartrate) {
+		if (this.vitalsigns.containsKey(ToA)) {
+			ArrayList<Number> vitals = new ArrayList<Number>();
+			vitals.add(temp);
+			vitals.add(bloodpressure);
+			vitals.add(heartrate);
+			this.vitalsigns.get(ToA).put(vitaltime, vitals);
+		} else {
+		Map<String, ArrayList<Number>> v = 
+				new HashMap<String, ArrayList<Number>>();
 		ArrayList<Number> vitals = new ArrayList<Number>();
 		vitals.add(temp);
 		vitals.add(bloodpressure);
 		vitals.add(heartrate);
-		this.vitalsigns.put(ToA, vitals);
+		v.put(vitaltime, vitals);
+		this.vitalsigns.put(ToA, v);
+		}
 	}
 }
