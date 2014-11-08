@@ -8,5 +8,6 @@
     <string name="title_activity_patient">PatientActivity</string>
     <string name="title_activity_pastvitals">PastvitalsActivity</string>
     <string name="title_activity_arrivaltimes">ArrivaltimesActivity</string>
+    <string name="title_activity_vitaltimes">VitaltimesActivity</string>
 
 </resources>

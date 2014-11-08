@@ -211,6 +211,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:onClick="viewArrivaltimes"
         android:text="View Arrival Times" />
 
     <Button
@@ -219,15 +220,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:onClick="Save"
         android:text="Save" />
 
     <Button
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/buttonPastvitals"
-        android:layout_toLeftOf="@+id/buttonPastvitals"
-        android:layout_marginRight="5dp"
+        android:layout_alignBaseline="@+id/buttonPastarrivaltimes"
+        android:layout_alignBottom="@+id/buttonPastarrivaltimes"
+        android:layout_alignRight="@+id/textView2"
         android:onClick="goBack"
         android:text="Back" />
 

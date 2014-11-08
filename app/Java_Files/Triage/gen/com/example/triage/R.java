@@ -24,50 +24,55 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f08001f;
+        public static final int action_settings=0x7f080022;
         public static final int buttonBack=0x7f080005;
         public static final int buttonLookup=0x7f080007;
         public static final int buttonPastarrivaltimes=0x7f08001d;
         public static final int buttonPastvitals=0x7f080004;
         public static final int buttonSave=0x7f08001e;
+        public static final int buttonVitals=0x7f080021;
         public static final int buttonVitaltimes=0x7f080001;
         public static final int editHealthcardnum=0x7f080006;
         public static final int editTextArrivalinfo=0x7f080003;
-        public static final int editTextArrivaltime=0x7f080017;
-        public static final int editTextBloodpressure=0x7f08001a;
-        public static final int editTextHeartrate=0x7f08001b;
-        public static final int editTextTemperature=0x7f080019;
-        public static final int editTextVitaltime=0x7f080009;
+        public static final int editTextArrivaltime=0x7f080016;
+        public static final int editTextBloodpressure=0x7f080019;
+        public static final int editTextHeartrate=0x7f08001a;
+        public static final int editTextTemperature=0x7f080018;
+        public static final int editTextVitaltime=0x7f08001c;
+        public static final int editTextVitaltimeinfo=0x7f080020;
+        public static final int textView=0x7f080008;
         public static final int textView1=0x7f080002;
-        public static final int textView2=0x7f08000a;
-        public static final int textView3=0x7f08000b;
-        public static final int textView4=0x7f08000c;
-        public static final int textView5=0x7f08000d;
-        public static final int textView6=0x7f08000e;
-        public static final int textView7=0x7f08000f;
-        public static final int textView8=0x7f080010;
-        public static final int textViewArrivaltime=0x7f080018;
+        public static final int textView2=0x7f080009;
+        public static final int textView3=0x7f08000a;
+        public static final int textView4=0x7f08000b;
+        public static final int textView5=0x7f08000c;
+        public static final int textView6=0x7f08000d;
+        public static final int textView7=0x7f08000e;
+        public static final int textView8=0x7f08000f;
+        public static final int textViewArrivaltime=0x7f080017;
         public static final int textViewArrivaltimes=0x7f080000;
-        public static final int textViewBloodpressure=0x7f080015;
-        public static final int textViewDob=0x7f080012;
-        public static final int textViewHealthcardnum=0x7f080013;
-        public static final int textViewHeartrate=0x7f080016;
-        public static final int textViewName=0x7f080011;
-        public static final int textViewPastvitals=0x7f080008;
-        public static final int textViewTemperature=0x7f080014;
-        public static final int textViewVitaltime=0x7f08001c;
+        public static final int textViewBloodpressure=0x7f080014;
+        public static final int textViewDob=0x7f080011;
+        public static final int textViewHealthcardnum=0x7f080012;
+        public static final int textViewHeartrate=0x7f080015;
+        public static final int textViewName=0x7f080010;
+        public static final int textViewTemperature=0x7f080013;
+        public static final int textViewVitaltime=0x7f08001b;
+        public static final int textViewVitaltimes=0x7f08001f;
     }
     public static final class layout {
         public static final int activity_arrivaltimes=0x7f030000;
         public static final int activity_main=0x7f030001;
         public static final int activity_pastvitals=0x7f030002;
         public static final int activity_patient=0x7f030003;
+        public static final int activity_vitaltimes=0x7f030004;
     }
     public static final class menu {
         public static final int arrivaltimes=0x7f070000;
         public static final int main=0x7f070001;
         public static final int pastvitals=0x7f070002;
         public static final int patient=0x7f070003;
+        public static final int vitaltimes=0x7f070004;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
@@ -77,6 +82,7 @@ public final class R {
         public static final int title_activity_arrivaltimes=0x7f050006;
         public static final int title_activity_pastvitals=0x7f050005;
         public static final int title_activity_patient=0x7f050004;
+        public static final int title_activity_vitaltimes=0x7f050007;
     }
     public static final class style {
         /** 

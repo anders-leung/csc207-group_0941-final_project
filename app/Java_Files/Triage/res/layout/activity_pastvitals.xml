@@ -9,13 +9,13 @@
     tools:context=".PastvitalsActivity" >
 
     <TextView
-        android:id="@+id/textViewPastvitals"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:textSize="20dp"
-        android:text="Past vital times here" />
+        android:text="Vital Information Here" />
 
     <Button
         android:id="@+id/buttonBack"
@@ -25,13 +25,5 @@
         android:layout_alignParentLeft="true"
         android:onClick="goBack"
         android:text="Back" />
-
-    <EditText
-        android:id="@+id/editTextVitaltime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonBack"
-        android:layout_alignLeft="@+id/buttonBack"
-        android:ems="10" />
 
 </RelativeLayout>

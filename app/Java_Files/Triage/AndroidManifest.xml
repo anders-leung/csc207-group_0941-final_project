@@ -34,6 +34,10 @@
             android:name="com.example.triage.ArrivaltimesActivity"
             android:label="@string/title_activity_arrivaltimes" >
         </activity>
+        <activity
+            android:name="com.example.triage.VitaltimesActivity"
+            android:label="@string/title_activity_vitaltimes" >
+        </activity>
     </application>
 
 </manifest>
