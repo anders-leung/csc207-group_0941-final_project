@@ -10,20 +10,18 @@ import android.widget.TextView;
 
 public class PastvitalsActivity extends Activity {
 
+	Intent intent = getIntent();
+	String vitals = intent.getStringExtra(VitaltimesActivity.VITALS);
+	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		// get health card number
-		SharedPreferences patient = getSharedPreferences("com.example.triage", 0);
-		String healthcardnum = patient.getString("healhcardnumber", "N/A");
-		
-		Intent intent = getIntent();
-		String vitaltime = intent.getStringExtra(VitaltimesActivity.VITALTIME);
 		
 		// method for vital information here
 		
 		TextView textView = (TextView) findViewById(R.id.textView);
-		// textView.setText(list of vital info);
+		textView.setText(vitals);
 		
 		setContentView(R.layout.activity_pastvitals);
 	}
@@ -36,7 +34,7 @@ public class PastvitalsActivity extends Activity {
 	}
 	
 	public void goBack(View view) {
-		Intent intent = new Intent(this, VitaltimesActivity.class);
-		startActivity(intent);
+		Intent intentback = new Intent(this, VitaltimesActivity.class);
+		startActivity(intentback);
 	}
 }

@@ -1,5 +1,7 @@
 package com.example.triage;
 
+import java.util.HashMap;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -13,10 +15,15 @@ public class MainActivity extends Activity {
 	
 	// public final static String HEALTHCARDNUM = "com.example.triage.HEALTHCARDNUMBER";
 	public final static String HEALTHCARDNUM = "HealthCardNum";
+	public final static String PATIENT = "PatientInfo";
 
+	// loads files
+	HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_main);
 	}
 
@@ -38,7 +45,12 @@ public class MainActivity extends Activity {
 		
 		prefEditor.putString("healthcardnumber", healthcardnum);
 		prefEditor.commit();
-		// intent.putExtra(HEALTHCARDNUM, healthcardnum);
+		
+		
+		Nurse nurse = new Nurse();
+		nurse.lookupPatient(patientdocs, healthcardnum);
+		
+		intent.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
 		startActivity(intent);
 	}
 }
