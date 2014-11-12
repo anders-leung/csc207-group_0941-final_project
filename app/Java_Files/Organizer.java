@@ -5,15 +5,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.TreeMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
 public class Organizer {
 
-	private static HashMap<String, Patient> hcnToPatient = new HashMap<String, Patient>();
+	private static TreeMap<String, Patient> hcnToPatient = new TreeMap<String, Patient>();
 	
 	/**
 	 * @param args
@@ -74,7 +73,7 @@ public class Organizer {
 		String toa;
 		String vitaltime;
 		double temp;
-		int bloodpressure;
+		String bloodpressure;
 		int heartrate;
 		
 		while (scanner.hasNextLine()) {
@@ -86,7 +85,7 @@ public class Organizer {
 				toa = data[0];
 				vitaltime = data[1];
 				temp = Double.parseDouble(data[2]);
-				bloodpressure = Integer.parseInt(data[3]);
+				bloodpressure = data[3];
 				heartrate = Integer.parseInt(data[4]);
 				patient.setVitalsigns(
 						toa, vitaltime, temp, bloodpressure, heartrate);
@@ -104,9 +103,9 @@ public class Organizer {
 	public static void saveData() throws FileNotFoundException {
 		
 		FileOutputStream outputStream = 
-				openFileOutput("patient_vitals.txt", MODE_PRIVATE);
+				openFileOutput("patient_vitals.txt", MODE_APPEND);
 		String output;
-		Map<String, Map<String, ArrayList<Number>>> vitals;
+		TreeMap<String, TreeMap<String, ArrayList<Object>>> vitals;
 		
 		try {
 			for (String hcn: hcnToPatient.keySet()) {
@@ -116,7 +115,7 @@ public class Organizer {
 					output = output + toa + ",";
 					for (String vitaltime: vitals.get(toa).keySet()) {
 						output = output + vitaltime + ",";
-						for (Number data: vitals.get(toa).get(vitaltime)) {
+						for (Object data: vitals.get(toa).get(vitaltime)) {
 							output = output + data + ",";
 						}
 						output = output + " ";

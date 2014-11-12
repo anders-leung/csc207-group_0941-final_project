@@ -37,7 +37,7 @@ public class Nurse {
 	 * time, retaining older values
 	 */
 	public void updatepatient(String toa, String vitaltime, double temp, 
-			int bloodpressure, int heartrate) {
+			String bloodpressure, int heartrate) {
 		this.patient.setVitalsigns(toa, vitaltime, temp, bloodpressure, heartrate);
 	}
 	
@@ -45,7 +45,7 @@ public class Nurse {
 	 * Nurse can create a new visit record based on the patient's arrival time
 	 */
 	public void newVisitRecord(String toa, String vitaltime, double temp, 
-			int bloodpressure, int heartrate) {
+			String bloodpressure, int heartrate) {
 		this.patient.setVitalsigns(toa, vitaltime, temp, bloodpressure, heartrate);
 	}
 	
@@ -55,7 +55,7 @@ public class Nurse {
 	 * @param toa
 	 * @return
 	 */
-	public Map<String, ArrayList<Number>> lookupPatientRecord(Map<String, Patient> patientlist, 
+	public Map<String, ArrayList<Object>> lookupPatientRecord(Map<String, Patient> patientlist, 
 			String toa) {
 		return this.patient.getVitalsigns().get(toa);
 	}
