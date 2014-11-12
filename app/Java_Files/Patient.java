@@ -21,6 +21,7 @@ public class Patient {
 	protected String dob;
 	protected int age;
 	private int urgency;
+	private String prescription;
 	
 	/**
 	 * An ArrayList that holds the times that Patient was seen by doctor.
@@ -215,5 +216,23 @@ public class Patient {
 		if ((Integer) latestrecord.get(2) <= 50) {
 			this.urgency++;
 		}
+	}
+	
+	/**
+	 * Return the string description of the prescription, including the name
+	 * of the medication and the instructions.
+	 * @return a string  description of prescription
+	 */
+	public String getPrescription() {
+		return prescription;
+	}
+	
+	/**
+	 * Adds a prescription to Patient, naming the prescribed medication and
+	 * its instructions.
+	 * @param prescription
+	 */
+	public void setPrescription(String prescription) {
+		this.prescription = prescription;
 	}
 }
