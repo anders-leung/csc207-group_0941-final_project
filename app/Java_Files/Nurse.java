@@ -1,17 +1,26 @@
 package com.example.triage;
 
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.TreeMap;
 
 
-public class Nurse {
+public class Nurse extends User{
 	
-	protected Patient patient;
-	protected Map<String, Patient> patientlist;
+	private Patient patient;
+	private Map<String, Patient> patientlist;
 	
 
 	public Nurse() {
+		try {
+			Organizer organizer = new Organizer();
+		}
+		catch (FileNotFoundException e) {
+			
+		}
+		this.patientlist = Organizer.getHcnToPatient();
 	}
 	
 	/**
@@ -21,11 +30,11 @@ public class Nurse {
 	 * @param hcn
 	 * @return
 	 */
-	public Patient lookupPatient(Map<String, Patient> patientlist, String hcn){
+	public Patient lookupPatient(String hcn){
 		
 		if (patientlist.get(hcn) != null) {
-			patient = patientlist.get(hcn);
-			return patient;
+			this.patient = this.patientlist.get(hcn);
+			return this.patient;
 		}
 		else {
 			return null;
@@ -55,8 +64,24 @@ public class Nurse {
 	 * @param toa
 	 * @return
 	 */
-	public Map<String, ArrayList<Object>> lookupPatientRecord(Map<String, Patient> patientlist, 
-			String toa) {
+	public Map<String, ArrayList<Object>> lookupPatientRecord(String toa) {
 		return this.patient.getVitalsigns().get(toa);
+	}
+	
+	public Map<Integer, ArrayList<Patient>> notseenbydoctor() {
+		TreeMap<Integer, ArrayList<Patient>> map = 
+				new TreeMap<Integer, ArrayList<Patient>>();
+		for (String hcn: this.patientlist.keySet()) {
+			Patient p = this.patientlist.get(hcn);
+			if (p.getSeenbydoctor().equals("[]")) {
+				if (map.keySet().contains(p.getUrgency())) {
+					map.get(p.getUrgency()).add(p);
+				} else {
+					ArrayList<Patient> patients = new ArrayList<Patient>();
+					patients.add(p);
+					map.put(p.getUrgency(), patients);
+				}
+			}
+		} return map.descendingMap();
 	}
 }

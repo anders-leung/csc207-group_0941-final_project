@@ -1,5 +1,6 @@
 package com.example.triage;
 
+import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class Physician extends User {
@@ -8,6 +9,13 @@ public class Physician extends User {
 	private Map<String, Patient> patientlist;
 	
 	public Physician() {
+		try {
+			Organizer organizer = new Organizer();
+		}
+		catch (FileNotFoundException e) {
+			
+		}
+		this.patientlist = Organizer.getHcnToPatient();
 	}
 	
 	public Patient lookupPatient(String hcn) {
