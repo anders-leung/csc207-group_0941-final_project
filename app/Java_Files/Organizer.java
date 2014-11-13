@@ -23,9 +23,8 @@ public class Organizer {
 		
 		populatePatients();
 		addPatientData();
-		
-		Nurse nurse = new Nurse();
 	}
+	
 	
 	/**
 	 * Reads a given file to generate a list of patients.
@@ -80,6 +79,7 @@ public class Organizer {
 			patientData = scanner.nextLine().split(" ");
 			hcn = patientData[0];
 			patient = hcnToPatient.get(hcn);
+			
 			for (int i = 1; i < patientData.length; i++) {
 				data = patientData[i].split(",");
 				toa = data[0];
@@ -96,6 +96,53 @@ public class Organizer {
 		
 	}
 	
+	private static void readSymptoms() throws FileNotFoundException {
+
+		Scanner scanner =
+				new Scanner(new FileInputStream("patient_symptoms.txt"));
+		Patient patient;
+		String [] symptomData;
+		String [] info;
+		String hcn;
+		String time;
+		String description;
+		
+		while (scanner.hasNextLine()) {
+			symptomData = scanner.nextLine().split(" ");
+			hcn = symptomData[0];
+			patient = hcnToPatient.get(hcn);
+			
+			for (int i = 1; i < symptomData.length; i++) {
+				info = symptomData[i].split(",");
+				time = info[0];
+				description = info[1];
+				patient.setSymptoms(time, description);
+				
+			}
+		}
+		
+		
+	}
+	
+	private static void readPrescription() throws FileNotFoundException {
+		
+		Scanner scanner =
+				new Scanner(new FileInputStream("patient_prescription.txt"));
+		Patient patient;
+		String [] prescriptionInfo;
+		String hcn;
+		String prescription;
+		
+		while (scanner.hasNextLine()) {
+			prescriptionInfo = scanner.nextLine().split(" ");
+			hcn = prescriptionInfo[0];
+			prescription = prescriptionInfo[1];
+			patient = hcnToPatient.get(hcn);
+			patient.setPrescription(prescription);
+		}
+		
+	}
+	
 	/**
 	 * Saves data for all patients to a file.
 	 * @throws FileNotFoundException
@@ -103,7 +150,7 @@ public class Organizer {
 	public static void saveData() throws FileNotFoundException {
 		
 		FileOutputStream outputStream = 
-				openFileOutput("patient_vitals.txt", MODE_APPEND);
+				openFileOutput("patient_vitals.txt", MODE_PRIVATE);
 		String output;
 		TreeMap<String, TreeMap<String, ArrayList<Object>>> vitals;
 		
@@ -121,12 +168,84 @@ public class Organizer {
 						output = output + " ";
 					}
 				}
+				output = output.trim();
 				outputStream.write((output + "\n").getBytes());
 			}
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	}
+	
+	public static void savePrescriptions() {
+		
+		FileOutputStream outputStream = 
+				openFileOutput("patient_prescriptions.txt", MODE_PRIVATE);
+		String output;
+		Patient patient;
+		
+		try {
+			for (String hcn: hcnToPatient.keySet()) {
+				patient = hcnToPatient.get(hcn);
+				output = hcn + "," + patient.getPrescription();
+				outputStream.write((output + "\n").getBytes());
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void saveSymptoms() {
+		
+		FileOutputStream outputStream = 
+				openFileOutput("patient_prescriptions.txt", MODE_PRIVATE);
+		String output;
+		Patient patient;
+		TreeMap<String, String> symptoms;
+		
+		try {
+			for (String hcn: hcnToPatient.keySet()) {
+				patient = hcnToPatient.get(hcn);
+				symptoms = patient.getSymptoms();
+				output = hcn + " ";
+				for (String time: symptoms.keySet()) {
+					output = output + time + "," +symptoms.get(time) + " ";
+				}
+				output = output.trim();
+				outputStream.write((output + "\n").getBytes());
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static void addPatient(Patient p) {
+		
+		FileOutputStream outputStream = 
+				openFileOutput("patient_records.txt", MODE_PRIVATE);
+		String output;
+		Patient patient;
+		
+		try {
+			for (String hcn: hcnToPatient.keySet()) {
+				patient = hcnToPatient.get(hcn);
+				output = hcn + "," + patient.name + "," + patient.dob;
+				outputStream.write((output + "\n").getBytes());
+			}
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public static TreeMap<String, Patient> getHcnToPatient() {
+		return hcnToPatient;
 	}
 
 }

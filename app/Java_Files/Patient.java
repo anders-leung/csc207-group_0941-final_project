@@ -137,6 +137,10 @@ public class Patient {
 	public String getSymptoms(String time) {
 		return symptoms.get(time);
 	}
+	
+	public TreeMap<String, String> getSymptoms() {
+		return symptoms;
+	}
 	 
 	/**
 	 * Records symptoms of Patient for a given time.
