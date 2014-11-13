@@ -1,14 +1,13 @@
 package com.example.triage;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TreeMap;
-import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 /**
  * An Organizer reads all files to create a patient list 
@@ -40,7 +39,7 @@ public class Organizer {
 	private void populatePatients() throws FileNotFoundException {
 		
 		Scanner scanner = 
-				new Scanner(new FileInputStream("patient_records.txt"));
+				new Scanner(new FileInputStream("/h/u8/c3/00/c3leungb/patient_records.txt"));
 		ArrayList<Patient> patients = new ArrayList<Patient>();
 		
 		String [] patientData;
@@ -70,7 +69,7 @@ public class Organizer {
 	private void addPatientData() throws FileNotFoundException {
 		
 		Scanner scanner =
-				new Scanner(new FileInputStream("patient_vitals.txt"));
+				new Scanner(new FileInputStream("/h/u8/c3/00/c3leungb/patient_vitals.txt"));
 		
 		Patient patient;
 		String [] patientData;
@@ -110,7 +109,7 @@ public class Organizer {
 	private void readSymptoms() throws FileNotFoundException {
 
 		Scanner scanner =
-				new Scanner(new FileInputStream("patient_symptoms.txt"));
+				new Scanner(new FileInputStream("/h/u8/c3/00/c3leungb/patient_symptoms.txt"));
 		Patient patient;
 		String [] symptomData;
 		String [] info;
@@ -142,7 +141,7 @@ public class Organizer {
 	private void readPrescription() throws FileNotFoundException {
 		
 		Scanner scanner =
-				new Scanner(new FileInputStream("patient_prescription.txt"));
+				new Scanner(new FileInputStream("/h/u8/c3/00/c3leungb/patient_prescriptions.txt"));
 		Patient patient;
 		String [] prescriptionInfo;
 		String hcn;
@@ -165,8 +164,8 @@ public class Organizer {
 	 */
 	public void saveData() throws FileNotFoundException {
 		
-		FileOutputStream outputStream = 
-				openFileOutput("patient_vitals.txt", MODE_PRIVATE);
+		File dir = new File("/h/u8/c3/00/c3leungb/patient_vitals.txt");
+		FileOutputStream outputStream = new FileOutputStream(dir);
 		String output;
 		TreeMap<String, TreeMap<String, ArrayList<Object>>> vitals;
 		
@@ -200,8 +199,8 @@ public class Organizer {
 	 */
 	public void savePrescriptions() throws FileNotFoundException {
 		
-		FileOutputStream outputStream = 
-				openFileOutput("patient_prescriptions.txt", MODE_PRIVATE);
+		File dir = new File("/h/u8/c3/00/c3leungb/patient_prescriptions.txt");
+		FileOutputStream outputStream = new FileOutputStream(dir);
 		String output;
 		Patient patient;
 		
@@ -224,8 +223,8 @@ public class Organizer {
 	 */
 	public void saveSymptoms() throws FileNotFoundException {
 		
-		FileOutputStream outputStream = 
-				openFileOutput("patient_prescriptions.txt", MODE_PRIVATE);
+		File dir = new File("/h/u8/c3/00/c3leungb/patient_symptoms.txt");
+		FileOutputStream outputStream = new FileOutputStream(dir);
 		String output;
 		Patient patient;
 		TreeMap<String, String> symptoms;
@@ -254,8 +253,8 @@ public class Organizer {
 	 */
 	public void recordPatients() throws FileNotFoundException {
 		
-		FileOutputStream outputStream = 
-				openFileOutput("patient_records.txt", MODE_PRIVATE);
+		File dir = new File("/h/u8/c3/00/c3leungb/patient_records.txt");
+		FileOutputStream outputStream = new FileOutputStream(dir);
 		String output;
 		Patient patient;
 		
@@ -287,6 +286,11 @@ public class Organizer {
 	 */
 	public TreeMap<String, Patient> getHcnToPatient() {
 		return hcnToPatient;
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		Organizer organizer = new Organizer();
+		System.out.println(organizer.hcnToPatient);
 	}
 
 }
