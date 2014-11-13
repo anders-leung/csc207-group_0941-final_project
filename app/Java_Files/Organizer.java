@@ -10,27 +10,34 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * An Organizer reads all files to create a patient list 
+ * and allows for modifying files.
+ * @author c3wangyu
+ *
+ */
 public class Organizer {
 
-	private static TreeMap<String, Patient> hcnToPatient = new TreeMap<String, Patient>();
+	private TreeMap<String, Patient> hcnToPatient = 
+			new TreeMap<String, Patient>();
 	
 	/**
-	 * @param args
-	 * @throws FileNotFoundException 
+	 * Constructs the organizer class that populates a Map of 
+	 * patients and adds data for each.
+	 * @throws FileNotFoundException
 	 */
-	public static void main(String[] args) throws FileNotFoundException {
-		// TODO Auto-generated method stub
-		
+	public Organizer() throws FileNotFoundException {
 		populatePatients();
 		addPatientData();
+		readSymptoms();
+		readPrescription();
 	}
-	
 	
 	/**
 	 * Reads a given file to generate a list of patients.
 	 * @throws FileNotFoundException
 	 */
-	private static void populatePatients() throws FileNotFoundException {
+	private void populatePatients() throws FileNotFoundException {
 		
 		Scanner scanner = 
 				new Scanner(new FileInputStream("patient_records.txt"));
@@ -60,7 +67,7 @@ public class Organizer {
 	 * Reads a file to add generate a list of patients' data.
 	 * @throws FileNotFoundException
 	 */
-	private static void addPatientData() throws FileNotFoundException {
+	private void addPatientData() throws FileNotFoundException {
 		
 		Scanner scanner =
 				new Scanner(new FileInputStream("patient_vitals.txt"));
@@ -96,7 +103,11 @@ public class Organizer {
 		
 	}
 	
-	private static void readSymptoms() throws FileNotFoundException {
+	/**
+	 * Reads a description of patients' symptoms from a file and saves them.
+	 * @throws FileNotFoundException
+	 */
+	private void readSymptoms() throws FileNotFoundException {
 
 		Scanner scanner =
 				new Scanner(new FileInputStream("patient_symptoms.txt"));
@@ -120,11 +131,15 @@ public class Organizer {
 				
 			}
 		}
-		
+		scanner.close();
 		
 	}
 	
-	private static void readPrescription() throws FileNotFoundException {
+	/**
+	 * Reads patients' prescriptions from a file and saves them.
+	 * @throws FileNotFoundException
+	 */
+	private void readPrescription() throws FileNotFoundException {
 		
 		Scanner scanner =
 				new Scanner(new FileInputStream("patient_prescription.txt"));
@@ -140,14 +155,15 @@ public class Organizer {
 			patient = hcnToPatient.get(hcn);
 			patient.setPrescription(prescription);
 		}
-		
+		scanner.close();
+
 	}
 	
 	/**
-	 * Saves data for all patients to a file.
+	 * Writes medical data for all patients to a file.
 	 * @throws FileNotFoundException
 	 */
-	public static void saveData() throws FileNotFoundException {
+	public void saveData() throws FileNotFoundException {
 		
 		FileOutputStream outputStream = 
 				openFileOutput("patient_vitals.txt", MODE_PRIVATE);
@@ -178,7 +194,11 @@ public class Organizer {
 		
 	}
 	
-	public static void savePrescriptions() {
+	/**
+	 * Writes all patient prescriptions to a file.
+	 * @throws FileNotFoundException
+	 */
+	public void savePrescriptions() throws FileNotFoundException {
 		
 		FileOutputStream outputStream = 
 				openFileOutput("patient_prescriptions.txt", MODE_PRIVATE);
@@ -198,7 +218,11 @@ public class Organizer {
 		
 	}
 	
-	public static void saveSymptoms() {
+	/**
+	 * Writes all patient symptom descriptions to a file.
+	 * @throws FileNotFoundException
+	 */
+	public void saveSymptoms() throws FileNotFoundException {
 		
 		FileOutputStream outputStream = 
 				openFileOutput("patient_prescriptions.txt", MODE_PRIVATE);
@@ -224,7 +248,11 @@ public class Organizer {
 		
 	}
 	
-	public static void addPatient(Patient p) {
+	/**
+	 * Writes all patients with their personal information to a file.
+	 * @throws FileNotFoundException
+	 */
+	public void recordPatients() throws FileNotFoundException {
 		
 		FileOutputStream outputStream = 
 				openFileOutput("patient_records.txt", MODE_PRIVATE);
@@ -244,7 +272,20 @@ public class Organizer {
 		
 	}
 	
-	public static TreeMap<String, Patient> getHcnToPatient() {
+	/**
+	 * Adds new patient to the map of patients.
+	 * @param p
+	 * 			- The new patient to be a added.
+	 */
+	public void addPatient(Patient p) {
+		hcnToPatient.put(p.hcn, p);	
+	}
+	
+	/**
+	 * Returns the Map of patients.
+	 * @return A Map of healthcard numbers to their respective patients.
+	 */
+	public TreeMap<String, Patient> getHcnToPatient() {
 		return hcnToPatient;
 	}
 

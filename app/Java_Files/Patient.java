@@ -138,6 +138,10 @@ public class Patient {
 		return symptoms.get(time);
 	}
 	
+	/**
+	 * Return all recorded descriptions of Patients symptoms
+	 * @return A Map that describes Patients symptoms for each given time.
+	 */
 	public TreeMap<String, String> getSymptoms() {
 		return symptoms;
 	}
