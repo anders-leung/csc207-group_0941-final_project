@@ -110,9 +110,12 @@ public class Patient {
 	 * 
 	 * @return a String representation of the time Patient was seen by doctor.
 	 */
-	public String getSeenbydoctor() {
-		int lastindex = this.seenbydoctor.size() - 1;
-		return seenbydoctor.get(lastindex);
+	public Object getSeenbydoctor() {
+		if (this.seenbydoctor.isEmpty()) {
+			return this.seenbydoctor;			
+		} else {
+			return this.seenbydoctor.get(0);
+		}
 	}
 	
 	/**
@@ -122,7 +125,7 @@ public class Patient {
 	 * 			  doctor.
 	 */
 	public void setSeenbydoctor(String timeseenbydoctor) {
-		this.seenbydoctor.add(timeseenbydoctor);
+		this.seenbydoctor.add(0, timeseenbydoctor);
 	}
 	
 	/**
@@ -138,10 +141,6 @@ public class Patient {
 		return symptoms.get(time);
 	}
 	
-	/**
-	 * Return all recorded descriptions of Patients symptoms
-	 * @return A Map that describes Patients symptoms for each given time.
-	 */
 	public TreeMap<String, String> getSymptoms() {
 		return symptoms;
 	}
