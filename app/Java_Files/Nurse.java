@@ -3,24 +3,21 @@ package com.example.triage;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
 
-public class Nurse extends User{
+public class Nurse {
 	
-	private Patient patient;
-	private Map<String, Patient> patientlist;
+	protected Patient patient;
+	protected Map<String, Patient> patientlist;
 	
 
-	public Nurse() {
-		try {
-			Organizer organizer = new Organizer();
-		}
-		catch (FileNotFoundException e) {
-			
-		}
-		this.patientlist = Organizer.getHcnToPatient();
+	public Nurse(String un, String pw) throws FileNotFoundException {
+		super(un, pw);
+		Organizer organizer = new Organizer();
+		this.patientlist = organizer.getHcnToPatient();
 	}
 	
 	/**
@@ -30,17 +27,68 @@ public class Nurse extends User{
 	 * @param hcn
 	 * @return
 	 */
-	public Patient lookupPatient(String hcn){
+	public Patient lookupPatient(Map<String, Patient> patientlist, String hcn){
 		
 		if (patientlist.get(hcn) != null) {
-			this.patient = this.patientlist.get(hcn);
-			return this.patient;
+			patient = patientlist.get(hcn);
+			return patient;
 		}
 		else {
 			return null;
 		}
 	}
+	/**
+	 * Nurse can create new patient records and record patient data
+	 * @param patientlist
+	 * @param name
+	 * @param dob
+	 * @param hcn
+	 */
+	public void addPatient(Map<String, Patient> patientlist, String name, String dob, String hcn){
+		Patient patient = new Patient(name, dob, hcn);
+		patientlist.put(hcn, patient);
+		
+	}
 	
+	/**
+	 * Nurse can record date and time when the patient is seen by a doctor
+	 * @param dateandtime
+	 */
+	public void recordDateandTime(String dateandtime){
+		this.patient.setSeenbydoctor(dateandtime);
+	}
+	
+	/**
+	 * Nurse can access a list of patients who has not yet seen by a doctorand ordered by 
+	 * decreasing urgency points
+	 * @param patientlist
+	 * @return
+	 */
+	public ArrayList<Patient> urgencylevel(){
+		ArrayList<Patient> unseenpatients = new ArrayList<Patient>();
+		for (Map.Entry<String, Patient> entry : this.patientlist.entrySet()){
+			if (entry.getValue().getSeenbydoctor().toString().equals("[]")){
+				unseenpatients.add(entry.getValue());
+			}
+		}
+		ArrayList<Integer> sortedpoints = new ArrayList<Integer>();
+		for (Patient patient: unseenpatients){
+			sortedpoints.add(patient.getUrgency());
+		}
+		Collections.sort(sortedpoints);
+		ArrayList<Patient> sortedlist = new ArrayList<Patient>();
+		for (int points : sortedpoints){
+			for (Patient p : unseenpatients){
+				if (points == p.getUrgency()){
+					sortedlist.add(p);
+				}
+			}
+		}
+		return sortedlist;
+	}
+	
+		
+		
 	/**
 	 * Nurse can update a patient's visit record with vital signs at a particular
 	 * time, retaining older values
@@ -64,7 +112,8 @@ public class Nurse extends User{
 	 * @param toa
 	 * @return
 	 */
-	public Map<String, ArrayList<Object>> lookupPatientRecord(String toa) {
+	public TreeMap<String, ArrayList<Object>> lookupPatientRecord(Map<String, Patient> patientlist, 
+			String toa) {
 		return this.patient.getVitalsigns().get(toa);
 	}
 	
@@ -73,7 +122,7 @@ public class Nurse extends User{
 				new TreeMap<Integer, ArrayList<Patient>>();
 		for (String hcn: this.patientlist.keySet()) {
 			Patient p = this.patientlist.get(hcn);
-			if (p.getSeenbydoctor().equals("[]")) {
+			if (p.getSeenbydoctor().toString().equals("[]")) {
 				if (map.keySet().contains(p.getUrgency())) {
 					map.get(p.getUrgency()).add(p);
 				} else {
@@ -84,4 +133,9 @@ public class Nurse extends User{
 			}
 		} return map.descendingMap();
 	}
+	
+//	public static void main(String[] args) throws FileNotFoundException {
+//		Nurse nurse = new Nurse('bob','booob');
+//		System.out.println(nurse.urgencylevel().get(3).name);
+//	}
 }
