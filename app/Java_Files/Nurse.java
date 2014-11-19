@@ -15,7 +15,6 @@ public class Nurse {
 	
 
 	public Nurse(String un, String pw) throws FileNotFoundException {
-		super(un, pw);
 		Organizer organizer = new Organizer();
 		this.patientlist = organizer.getHcnToPatient();
 	}
