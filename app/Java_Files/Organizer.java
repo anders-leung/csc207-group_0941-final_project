@@ -17,29 +17,17 @@ import java.util.Scanner;
  */
 public class Organizer {
 
-	private TreeMap<String, Patient> hcnToPatient = 
+	private static TreeMap<String, Patient> hcnToPatient = 
 			new TreeMap<String, Patient>();
-	
-	/**
-	 * Constructs the organizer class that populates a Map of 
-	 * patients and adds data for each.
-	 * @throws FileNotFoundException
-	 */
-	public Organizer() throws FileNotFoundException {
-		populatePatients();
-		addPatientData();
-		readSymptoms();
-		readPrescription();
-	}
 	
 	/**
 	 * Reads a given file to generate a list of patients.
 	 * @throws FileNotFoundException
 	 */
-	private void populatePatients() throws FileNotFoundException {
+	private static void populatePatients() throws FileNotFoundException {
 		
 		Scanner scanner = 
-				new Scanner(new FileInputStream("/h/u8/c3/00/c3leungb/patient_records.txt"));
+				new Scanner(new FileInputStream("patient_records.txt"));
 		ArrayList<Patient> patients = new ArrayList<Patient>();
 		
 		String [] patientData;
@@ -66,10 +54,10 @@ public class Organizer {
 	 * Reads a file to add generate a list of patients' data.
 	 * @throws FileNotFoundException
 	 */
-	private void addPatientData() throws FileNotFoundException {
+	private static void addPatientData() throws FileNotFoundException {
 		
 		Scanner scanner =
-				new Scanner(new FileInputStream("/h/u8/c3/00/c3leungb/patient_vitals.txt"));
+				new Scanner(new FileInputStream("patient_vitals.txt"));
 		
 		Patient patient;
 		String [] patientData;
@@ -106,10 +94,10 @@ public class Organizer {
 	 * Reads a description of patients' symptoms from a file and saves them.
 	 * @throws FileNotFoundException
 	 */
-	private void readSymptoms() throws FileNotFoundException {
+	private static void readSymptoms() throws FileNotFoundException {
 
 		Scanner scanner =
-				new Scanner(new FileInputStream("/h/u8/c3/00/c3leungb/patient_symptoms.txt"));
+				new Scanner(new FileInputStream("patient_symptoms.txt"));
 		Patient patient;
 		String [] symptomData;
 		String [] info;
@@ -138,10 +126,10 @@ public class Organizer {
 	 * Reads patients' prescriptions from a file and saves them.
 	 * @throws FileNotFoundException
 	 */
-	private void readPrescription() throws FileNotFoundException {
+	private static void readPrescription() throws FileNotFoundException {
 		
 		Scanner scanner =
-				new Scanner(new FileInputStream("/h/u8/c3/00/c3leungb/patient_prescriptions.txt"));
+				new Scanner(new FileInputStream("patient_prescriptions.txt"));
 		Patient patient;
 		String [] prescriptionInfo;
 		String hcn;
@@ -164,7 +152,7 @@ public class Organizer {
 	 */
 	public void saveData() throws FileNotFoundException {
 		
-		File dir = new File("/h/u8/c3/00/c3leungb/patient_vitals.txt");
+		File dir = new File("patient_vitals.txt");
 		FileOutputStream outputStream = new FileOutputStream(dir);
 		String output;
 		TreeMap<String, TreeMap<String, ArrayList<Object>>> vitals;
@@ -199,7 +187,7 @@ public class Organizer {
 	 */
 	public void savePrescriptions() throws FileNotFoundException {
 		
-		File dir = new File("/h/u8/c3/00/c3leungb/patient_prescriptions.txt");
+		File dir = new File("patient_prescriptions.txt");
 		FileOutputStream outputStream = new FileOutputStream(dir);
 		String output;
 		Patient patient;
@@ -223,7 +211,7 @@ public class Organizer {
 	 */
 	public void saveSymptoms() throws FileNotFoundException {
 		
-		File dir = new File("/h/u8/c3/00/c3leungb/patient_symptoms.txt");
+		File dir = new File("patient_symptoms.txt");
 		FileOutputStream outputStream = new FileOutputStream(dir);
 		String output;
 		Patient patient;
@@ -253,7 +241,7 @@ public class Organizer {
 	 */
 	public void recordPatients() throws FileNotFoundException {
 		
-		File dir = new File("/h/u8/c3/00/c3leungb/patient_records.txt");
+		File dir = new File("patient_records.txt");
 		FileOutputStream outputStream = new FileOutputStream(dir);
 		String output;
 		Patient patient;
@@ -283,14 +271,18 @@ public class Organizer {
 	/**
 	 * Returns the Map of patients.
 	 * @return A Map of healthcard numbers to their respective patients.
+	 * @throws FileNotFoundException 
 	 */
-	public TreeMap<String, Patient> getHcnToPatient() {
+	public static TreeMap<String, Patient> getHcnToPatient() throws FileNotFoundException {
+		populatePatients();
+		addPatientData();
+		readSymptoms();
+		readPrescription();
 		return hcnToPatient;
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException {
-		Organizer organizer = new Organizer();
-		System.out.println(organizer.hcnToPatient);
+		System.out.println(Organizer.getHcnToPatient());
 	}
 
 }

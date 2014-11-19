@@ -13,11 +13,14 @@ public class User {
 		this.password = pw;
 	}
 	
+	public User() {
+		
+	}
+	
 	public boolean login() throws IOException {
-		Launch launch = new Launch();
 		String[] logininfo = {this.username,this.password};
-		if (launch.getUsers().containsValue(logininfo)) {
-			if (launch.getUsers().get("nurse").contains(logininfo)) {
+		if (Launch.getUsers().containsValue(logininfo)) {
+			if (Launch.getUsers().get("nurse").contains(logininfo)) {
 				this.setJob("nurse");
 				return true;
 			} else {
@@ -35,5 +38,10 @@ public class User {
 
 	public void setJob(String job) {
 		this.job = job;
+	}
+	
+	public static void main(String[] args) throws IOException {
+		User user = new User("yorgos", "34234dd");
+		System.out.println(user.login());
 	}
 }

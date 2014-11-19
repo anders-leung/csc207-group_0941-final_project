@@ -8,10 +8,8 @@ public class Physician extends User {
 	private Patient patient;
 	private Map<String, Patient> patientlist;
 	
-	public Physician(String un, String pw) throws FileNotFoundException {
-		super(un, pw);
-		Organizer organizer = new Organizer();
-		this.patientlist = organizer.getHcnToPatient();
+	public Physician() throws FileNotFoundException {
+		this.patientlist = Organizer.getHcnToPatient();
 	}
 	
 	public Patient lookupPatient(String hcn) {

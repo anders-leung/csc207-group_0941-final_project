@@ -8,15 +8,14 @@ import java.util.Map;
 import java.util.TreeMap;
 
 
-public class Nurse {
+public class Nurse extends User {
 	
 	protected Patient patient;
 	protected Map<String, Patient> patientlist;
 	
 
-	public Nurse(String un, String pw) throws FileNotFoundException {
-		Organizer organizer = new Organizer();
-		this.patientlist = organizer.getHcnToPatient();
+	public Nurse() throws FileNotFoundException {
+		this.patientlist = Organizer.getHcnToPatient();
 	}
 	
 	/**
@@ -133,8 +132,8 @@ public class Nurse {
 		} return map.descendingMap();
 	}
 	
-//	public static void main(String[] args) throws FileNotFoundException {
-//		Nurse nurse = new Nurse('bob','booob');
-//		System.out.println(nurse.urgencylevel().get(3).name);
-//	}
+	public static void main(String[] args) throws FileNotFoundException {
+		Nurse nurse = new Nurse();
+		System.out.println(nurse.urgencylevel().get(0).name);
+	}
 }
