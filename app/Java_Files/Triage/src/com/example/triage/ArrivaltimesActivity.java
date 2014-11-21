@@ -19,15 +19,15 @@ public class ArrivaltimesActivity extends Activity {
 	Patient patientinfo = (Patient) intent.getExtras().getSerializable("Patient_info");
 	SharedPreferences patient = getSharedPreferences("com.example.triage", 0);
 	String healthcardnum = patient.getString("healhcardnumber", "N/A");
-	HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
+	//HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		TextView textView = (TextView) findViewById(R.id.textViewArrivaltimes);
-		String arrivalmap = patientinfo.getVitalsigns().keySet().toString();
-		textView.setText(arrivalmap);
+		//String arrivalmap = patientinfo.getVitalsigns().keySet().toString();
+		//textView.setText(arrivalmap);
 		setContentView(R.layout.activity_arrivaltimes);
 	}
 
@@ -49,9 +49,9 @@ public class ArrivaltimesActivity extends Activity {
 		EditText editText = (EditText) findViewById(R.id.editTextArrivalinfo);
 		intentnext.putExtra(ARRIVALTIME, editText.getText());
 		
-		Nurse nurse = new Nurse();
-		nurse.lookupPatient(patientdocs, healthcardnum);
-		intentnext.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
+		//Nurse nurse = new Nurse();
+		//nurse.lookupPatient(patientdocs, healthcardnum);
+		//intentnext.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
 		
 		startActivity(intentnext);
 	}

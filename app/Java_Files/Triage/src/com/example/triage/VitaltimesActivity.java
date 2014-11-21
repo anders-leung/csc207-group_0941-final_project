@@ -18,16 +18,16 @@ public class VitaltimesActivity extends Activity {
 	Patient patientinfo = (Patient) intent.getExtras().getSerializable("Patient_info");
 	SharedPreferences patient = getSharedPreferences("com.example.triage", 0);
 	String healthcardnum = patient.getString("healhcardnumber", "N/A");
-	HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
-	String arrivaltime = intent.getStringExtra(ArrivaltimesActivity.ARRIVALTIME);
+	//HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
+	//String arrivaltime = intent.getStringExtra(ArrivaltimesActivity.ARRIVALTIME);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		TextView textView = (TextView) findViewById(R.id.textViewVitaltimes);
-		String vitalmap = patientinfo.getVitalsigns().get(arrivaltime).keySet().toString();
-		textView.setText(vitalmap);
+		//String vitalmap = patientinfo.getVitalsigns().get(arrivaltime).keySet().toString();
+		//textView.setText(vitalmap);
 		
 		setContentView(R.layout.activity_vitaltimes);
 	}
@@ -47,9 +47,9 @@ public class VitaltimesActivity extends Activity {
 	public void viewPastVitals(View v) {
 		Intent intentnext = new Intent(this, PastvitalsActivity.class);
 		EditText editText = (EditText) findViewById(R.id.editTextVitaltimeinfo);
-		String vitals = patientinfo.getVitalsigns().get(arrivaltime).get(editText).toString();
+		//String vitals = patientinfo.getVitalsigns().get(arrivaltime).get(editText).toString();
 	
-		intentnext.putExtra(vitals, VITALS);
+		//intentnext.putExtra(vitals, VITALS);
 		startActivity(intentnext);
 	}
 

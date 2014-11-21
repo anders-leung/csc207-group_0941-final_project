@@ -9,5 +9,11 @@
     <string name="title_activity_pastvitals">PastvitalsActivity</string>
     <string name="title_activity_arrivaltimes">ArrivaltimesActivity</string>
     <string name="title_activity_vitaltimes">VitaltimesActivity</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="title_activity_new_patient">NewPatientActivity</string>
+    <string name="title_activity_seen_by_doc">SeenByDocActivity</string>
+    <string name="title_activity_physician">PhysicianActivity</string>
+    <string name="title_activity_new_prescription">NewPrescriptionActivity</string>
+    <string name="title_activity_physician_main">PhysicianMainActivity</string>
 
 </resources>

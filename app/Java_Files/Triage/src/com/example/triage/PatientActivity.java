@@ -21,7 +21,7 @@ public class PatientActivity extends Activity {
 	Patient patientinfo = (Patient) intent.getExtras().getSerializable("Patient_info");
 	SharedPreferences patient = getSharedPreferences("com.example.triage", 0);
 	String healthcardnum = patient.getString("healhcardnumber", "N/A");
-	HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
+	//HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +30,15 @@ public class PatientActivity extends Activity {
 		String name = patientinfo.name;
 		String dob = patientinfo.dob;
 		
-		Object[] arrivalmap = patientinfo.getVitalsigns().keySet().toArray();
-		String arrivaltime = arrivalmap[arrivalmap.length-1].toString();
+		//Object[] arrivalmap = patientinfo.getVitalsigns().keySet().toArray();
+		//String arrivaltime = arrivalmap[arrivalmap.length-1].toString();
 		
-		Object[] vitalmap = patientinfo.getVitalsigns().get(arrivalmap).keySet().toArray();
-		String vitaltime = vitalmap[vitalmap.length-1].toString();
+		//Object[] vitalmap = patientinfo.getVitalsigns().get(arrivalmap).keySet().toArray();
+		//String vitaltime = vitalmap[vitalmap.length-1].toString();
 		
-		Number temperature = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(0);
-		Number bloodpressure = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(1);
-		Number heartrate = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(2);
+		//Number temperature = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(0);
+		//Number bloodpressure = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(1);
+		//Number heartrate = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(2);
 		
 		// setting the text views
 		TextView textViewName = (TextView) findViewById(R.id.textViewName);
@@ -51,19 +51,19 @@ public class PatientActivity extends Activity {
 		textViewHealthcardnum.setText(healthcardnum);
 		
 		TextView textViewArrivaltime = (TextView) findViewById(R.id.textViewArrivaltime);
-		textViewArrivaltime.setText(arrivaltime);
+		//textViewArrivaltime.setText(arrivaltime);
 		
 		TextView textViewTemperature = (TextView) findViewById(R.id.textViewTemperature);
-		textViewTemperature.setText(temperature.toString());
+		//textViewTemperature.setText(temperature.toString());
 		
 		TextView textViewBloodpressure = (TextView) findViewById(R.id.textViewBloodpressure);
-		textViewBloodpressure.setText(bloodpressure.toString());
+		//textViewBloodpressure.setText(bloodpressure.toString());
 		
 		TextView textViewHeartrate = (TextView) findViewById(R.id.textViewHeartrate);
-		textViewHeartrate.setText(heartrate.toString());
+		//textViewHeartrate.setText(heartrate.toString());
 		
 		TextView textViewVitaltime = (TextView) findViewById(R.id.textViewVitaltime);
-		textViewVitaltime.setText(vitaltime);
+		//textViewVitaltime.setText(vitaltime);
 		
 		setContentView(R.layout.activity_patient);
 	}
@@ -98,12 +98,12 @@ public class PatientActivity extends Activity {
 		EditText editTextVitaltime = (EditText) findViewById(R.id.editTextVitaltime);
 		String vitaltime = editTextVitaltime.getText().toString();
 		
-		patientinfo.setVitalsigns(arrivaltime,vitaltime,temp,bp,hr);
+		//patientinfo.setVitalsigns(arrivaltime,vitaltime,temp,bp,hr);
 		
 		// method for saving here
 		
 		// After save, goes back to the main menu
-		Organizer.saveData();
+		//Organizer.saveData();
 		
 		Intent intentback = new Intent(this, MainActivity.class);
 		startActivity(intentback);
@@ -111,9 +111,9 @@ public class PatientActivity extends Activity {
 	
 	public void viewArrivaltimes(View view) {
 		Intent intentnext = new Intent(this, ArrivaltimesActivity.class);
-		Nurse nurse = new Nurse();
-		nurse.lookupPatient(patientdocs, healthcardnum);
-		intentnext.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
+		//Nurse nurse = new Nurse();
+		//nurse.lookupPatient(patientdocs, healthcardnum);
+		//intentnext.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
 		startActivity(intentnext);
 	}
 }

@@ -16,9 +16,6 @@ public class MainActivity extends Activity {
 	// public final static String HEALTHCARDNUM = "com.example.triage.HEALTHCARDNUMBER";
 	public final static String HEALTHCARDNUM = "HealthCardNum";
 	public final static String PATIENT = "PatientInfo";
-
-	// loads files
-	HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +32,6 @@ public class MainActivity extends Activity {
 	}
 	
 	public void lookupPatient(View view) {
-		Intent intent = new Intent(this, PatientActivity.class);
-		
 		SharedPreferences patient = this.getSharedPreferences("com.example.triage", 0);
 		SharedPreferences.Editor prefEditor = patient.edit();
 		
@@ -47,10 +42,23 @@ public class MainActivity extends Activity {
 		prefEditor.commit();
 		
 		
-		Nurse nurse = new Nurse();
-		nurse.lookupPatient(patientdocs, healthcardnum);
 		
-		intent.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
+		//Nurse nurse = new Nurse();
+		//nurse.lookupPatient(healthcardnum);
+		
+		//sends patient information here
+		//intent.putExtra("Patient_info", nurse.lookupPatient(healthcardnum));
+		
+		//if health card number exists then
+		Intent intent = new Intent(this, PatientActivity.class);
+		// else
+		// Intent intent = new Intent(this, NewPatientActivity.class);
+		
+		startActivity(intent);
+	}
+	 
+	public void viewUrgencylist(View view) {
+		Intent intent = new Intent(this, UrgencyListActivity.class);
 		startActivity(intent);
 	}
 }

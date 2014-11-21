@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class PastvitalsActivity extends Activity {
 
 	Intent intent = getIntent();
-	String vitals = intent.getStringExtra(VitaltimesActivity.VITALS);
+	//String vitals = intent.getStringExtra(VitaltimesActivity.VITALS);
 	
 
 	@Override
@@ -21,7 +21,7 @@ public class PastvitalsActivity extends Activity {
 		// method for vital information here
 		
 		TextView textView = (TextView) findViewById(R.id.textView);
-		textView.setText(vitals);
+		//textView.setText(vitals);
 		
 		setContentView(R.layout.activity_pastvitals);
 	}

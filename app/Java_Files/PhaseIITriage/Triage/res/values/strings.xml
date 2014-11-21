@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Triage</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="healthcardnum">healthcardnum</string>
+    <string name="title_activity_patient">PatientActivity</string>
+    <string name="title_activity_pastvitals">PastvitalsActivity</string>
+    <string name="title_activity_arrivaltimes">ArrivaltimesActivity</string>
+    <string name="title_activity_vitaltimes">VitaltimesActivity</string>
+
+</resources>

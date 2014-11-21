@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".ArrivaltimesActivity" >
+
+    <TextView
+        android:id="@+id/textViewArrivaltimes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textSize="20dp"
+        android:text="Past arrival times here" />
+
+    <Button
+        android:id="@+id/buttonVitaltimes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="viewVitaltimes"
+        android:text="View Vital Times" />
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextArrivalinfo"
+        android:layout_alignRight="@+id/buttonPastvitals"
+        android:text="Input desired arrival time to view past vital times."
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="goBack"
+        android:text="Back" />
+
+    <EditText
+        android:id="@+id/editTextArrivalinfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonVitaltimes"
+        android:layout_alignLeft="@+id/buttonBack"
+        android:ems="7" />
+
+</RelativeLayout>

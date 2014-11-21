@@ -27,4 +27,13 @@
         android:onClick="lookupPatient"
         android:text="Look Up Patient" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonLookup"
+        android:layout_below="@+id/buttonLookup"
+        android:onClick="viewUrgencylist"
+        android:text="View Urgency List" />
+
 </RelativeLayout>

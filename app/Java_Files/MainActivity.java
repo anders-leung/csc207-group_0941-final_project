@@ -28,8 +28,6 @@ public class MainActivity extends Activity {
 	}
 	
 	public void login(View view) throws IOException {
-		Launch launch = new Launch();
-		this.logindatabase = launch.getUsers();
 		
 		EditText usernameText = (EditText) findViewById(R.id.editUsername);
 		String username = usernameText.getText().toString();
