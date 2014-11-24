@@ -1,34 +1,36 @@
-package com.example.triage;
+package com.example.triageii;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Organizer {
 
-	private static HashMap<String, Patient> hcnToPatient = new HashMap<String, Patient>();
+	private static HashMap<String, Patient> hcnToPatient = 
+			new HashMap<String, Patient>();
 	
-	/**
-	 * @param args
-	 * @throws FileNotFoundException 
-	 */
-	public static void main(String[] args) throws FileNotFoundException {
-		// TODO Auto-generated method stub
-		
-		populatePatients();
-		addPatientData();
-		
-		Nurse nurse = new Nurse();
+	public Organizer(File dir) throws IOException {
+		File records = new File(dir, "patient_records.txt");
+		File vitals = new File(dir, "patient_vitals.txt");
+		if (records.exists()) {
+			this.populatePatients(records.getPath());
+		} else {
+			records.createNewFile();
+		} 
+		if (vitals.exists()) {
+			this.addPatientData(vitals.getPath());
+		} else {
+			vitals.createNewFile();
+		}
 	}
 	
-	public static HashMap<String, Patient> getHcnToPatient() {
+	public HashMap<String, Patient> getHcnToPatient() {
 		return hcnToPatient;
 	}
 
@@ -36,10 +38,10 @@ public class Organizer {
 	 * Reads a given file to generate a list of patients.
 	 * @throws FileNotFoundException
 	 */
-	private static void populatePatients() throws FileNotFoundException {
+	private void populatePatients(String filePath) throws FileNotFoundException {
 		
 		Scanner scanner = 
-				new Scanner(new FileInputStream("patient_records.txt"));
+				new Scanner(new FileInputStream(filePath));
 		ArrayList<Patient> patients = new ArrayList<Patient>();
 		
 		String [] patientData;
@@ -66,10 +68,10 @@ public class Organizer {
 	 * Reads a file to add generate a list of patients' data.
 	 * @throws FileNotFoundException
 	 */
-	private static void addPatientData() throws FileNotFoundException {
+	public void addPatientData(String filePath) throws FileNotFoundException {
 		
 		Scanner scanner =
-				new Scanner(new FileInputStream("patient_vitals.txt"));
+				new Scanner(new FileInputStream(filePath));
 		
 		Patient patient;
 		String [] patientData;
@@ -101,14 +103,15 @@ public class Organizer {
 		
 	}
 	
+	public void addPatientVitals(Patient patient) {
+		hcnToPatient.put(patient.hcn, patient);
+	}
 	/**
 	 * Saves data for all patients to a file.
 	 * @throws FileNotFoundException
 	 */
-	public static void saveData() throws FileNotFoundException {
+	public void saveData(FileOutputStream outputStream) throws FileNotFoundException {
 		
-		FileOutputStream outputStream = 
-				openFileOutput("patient_vitals.txt", 0);
 		String output;
 		Map<String, Map<String, ArrayList<Number>>> vitals;
 		
@@ -138,5 +141,15 @@ public class Organizer {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public static void main(String[] args) throws IOException {
+		File dir = new File("C:\\Users\\Anders\\Desktop");
+		Organizer organizer = new Organizer(dir);
+		Patient patient = new Patient("Serge Abiteboul", "1984-09-12", "111111");
+		patient.setVitalsigns("12:45", "12:50", 30.0, 90, 120);
+		organizer.hcnToPatient.put("111111", patient);
+		File file = new File(dir, "patient_vitals.txt");
+		FileOutputStream os = new FileOutputStream(file);
+		organizer.saveData(os);
+	}
 }

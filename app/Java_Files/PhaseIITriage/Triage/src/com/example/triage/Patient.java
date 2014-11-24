@@ -1,9 +1,9 @@
-package com.example.triage;
+package com.example.triageii;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * A patient that has permanent values that are name, date of birth,
@@ -15,6 +15,10 @@ import java.util.Map;
 
 public class Patient implements Serializable {	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -340961698773279153L;
 	/**
 	 * The identifier of the Patient.
 	 */
@@ -38,7 +42,7 @@ public class Patient implements Serializable {
 		this.dob = DoB;
 		this.hcn = HCN;
 		this.vitalsigns = 
-				new HashMap<String, Map<String, ArrayList<Number>>>();
+				new TreeMap<String, Map<String, ArrayList<Number>>>();
 	}
 	
 	/**
@@ -73,7 +77,7 @@ public class Patient implements Serializable {
 			this.vitalsigns.get(ToA).put(vitaltime, vitals);
 		} else {
 		Map<String, ArrayList<Number>> v = 
-				new HashMap<String, ArrayList<Number>>();
+				new TreeMap<String, ArrayList<Number>>();
 		ArrayList<Number> vitals = new ArrayList<Number>();
 		vitals.add(temp);
 		vitals.add(bloodpressure);
@@ -81,5 +85,12 @@ public class Patient implements Serializable {
 		v.put(vitaltime, vitals);
 		this.vitalsigns.put(ToA, v);
 		}
+	}
+	
+	public static void main(String[] args) {
+		Patient patient = new Patient("Anders Leung", "1995-06-16", "123123");
+		patient.setVitalsigns("12:45", "12:50", 39.0, 190, 1);
+		patient.setVitalsigns("1:00", "1:05", 40.0, 200, 2);
+		System.out.println(patient.vitalsigns);
 	}
 }

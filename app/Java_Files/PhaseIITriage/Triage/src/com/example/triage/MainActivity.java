@@ -1,12 +1,12 @@
-package com.example.triage;
+package com.example.triageii;
 
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -17,13 +17,9 @@ public class MainActivity extends Activity {
 	public final static String HEALTHCARDNUM = "HealthCardNum";
 	public final static String PATIENT = "PatientInfo";
 
-	// loads files
-	HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.activity_main);
 	}
 
@@ -34,7 +30,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void lookupPatient(View view) {
+	public void lookupPatient(View view) throws IOException {
 		Intent intent = new Intent(this, PatientActivity.class);
 		
 		SharedPreferences patient = this.getSharedPreferences("com.example.triage", 0);
@@ -46,11 +42,15 @@ public class MainActivity extends Activity {
 		prefEditor.putString("healthcardnumber", healthcardnum);
 		prefEditor.commit();
 		
+		File dir = new File(this.getApplicationContext().getFilesDir().getPath());
+		Nurse nurse = new Nurse(dir);
+		if (nurse.lookupPatient(healthcardnum)) {
+			intent.putExtra(PATIENT, nurse.getPatient());
+			intent.putExtra("caller", "MainActivity");
+			startActivity(intent);
+		} else {
+			
+		}
 		
-		Nurse nurse = new Nurse();
-		nurse.lookupPatient(patientdocs, healthcardnum);
-		
-		intent.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
-		startActivity(intent);
 	}
 }

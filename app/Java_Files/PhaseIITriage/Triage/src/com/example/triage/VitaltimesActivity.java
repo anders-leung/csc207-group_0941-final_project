@@ -1,11 +1,13 @@
-package com.example.triage;
+package com.example.triageii;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -13,23 +15,36 @@ import android.widget.TextView;
 
 public class VitaltimesActivity extends Activity {
 	
+	public final static String ARRIVALTIME = "ARRIVALTIME";
 	public static final String VITALS = "VITALS";
-	Intent intent = getIntent();
-	Patient patientinfo = (Patient) intent.getExtras().getSerializable("Patient_info");
-	SharedPreferences patient = getSharedPreferences("com.example.triage", 0);
-	String healthcardnum = patient.getString("healhcardnumber", "N/A");
-	HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
-	String arrivaltime = intent.getStringExtra(ArrivaltimesActivity.ARRIVALTIME);
+	public static final String PATIENT = "PatientInfo";
+	private Patient patientinfo;
+	private SharedPreferences patient;
+	private String healthcardnum;
+	private String arrivaltime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		setContentView(R.layout.activity_vitaltimes);
+		
+		
+		Intent intent = getIntent();
+		String caller = getIntent().getStringExtra("caller");
+		Log.v("VitalimesActivity", caller);
+		if (caller.equals("ArrivaltimesActivity")) {
+			patientinfo = (Patient) intent.getExtras().get(ArrivaltimesActivity.PATIENT);
+		} else {
+			patientinfo = (Patient) intent.getExtras().get(PastvitalsActivity.PATIENT);
+		}
+		patient = getSharedPreferences("com.example.triage", 0);
+		healthcardnum = patient.getString("healhcardnumber", "N/A");
+		arrivaltime = intent.getStringExtra(ArrivaltimesActivity.ARRIVALTIME);
+		
 		TextView textView = (TextView) findViewById(R.id.textViewVitaltimes);
 		String vitalmap = patientinfo.getVitalsigns().get(arrivaltime).keySet().toString();
 		textView.setText(vitalmap);
-		
-		setContentView(R.layout.activity_vitaltimes);
 	}
 
 	@Override
@@ -41,15 +56,21 @@ public class VitaltimesActivity extends Activity {
 	
 	public void goBack(View v) {
 		Intent intentback = new Intent(this, ArrivaltimesActivity.class);
+		intentback.putExtra(PATIENT, patientinfo);
+		intentback.putExtra("caller", "VitaltimesActivity");
 		startActivity(intentback);
 	}
 	
 	public void viewPastVitals(View v) {
 		Intent intentnext = new Intent(this, PastvitalsActivity.class);
 		EditText editText = (EditText) findViewById(R.id.editTextVitaltimeinfo);
-		String vitals = patientinfo.getVitalsigns().get(arrivaltime).get(editText).toString();
-	
-		intentnext.putExtra(vitals, VITALS);
+		ArrayList<Number> vitals = 
+				patientinfo.getVitalsigns().get(arrivaltime).get(
+						editText.getText().toString());
+		intentnext.putExtra(VITALS, vitals.toString());
+		intentnext.putExtra(PATIENT, patientinfo);
+		intentnext.putExtra(ARRIVALTIME, arrivaltime);
+		intentnext.putExtra("caller", "VitaltimesActivity");
 		startActivity(intentnext);
 	}
 

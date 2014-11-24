@@ -1,11 +1,12 @@
-package com.example.triage;
+package com.example.triageii;
 
-import java.util.HashMap;
+import java.io.File;
+import java.io.IOException;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -14,21 +15,26 @@ import android.widget.TextView;
 public class ArrivaltimesActivity extends Activity {
 	
 	public final static String ARRIVALTIME = "ARRIVALTIME";
-	
-	Intent intent = getIntent();
-	Patient patientinfo = (Patient) intent.getExtras().getSerializable("Patient_info");
-	SharedPreferences patient = getSharedPreferences("com.example.triage", 0);
-	String healthcardnum = patient.getString("healhcardnumber", "N/A");
-	HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
+	public final static String PATIENT = "PatientInfo";
+	private Patient patientinfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		TextView textView = (TextView) findViewById(R.id.textViewArrivaltimes);
-		String arrivalmap = patientinfo.getVitalsigns().keySet().toString();
-		textView.setText(arrivalmap);
 		setContentView(R.layout.activity_arrivaltimes);
+		
+		Intent intent = getIntent();
+		String caller = getIntent().getStringExtra("caller");
+		Log.v("ArrivaltimesActivity", caller);
+		if (caller.equals("PatientActivity")) {
+			this.patientinfo = (Patient) intent.getExtras().get(PatientActivity.PATIENT);
+		} else {
+			this.patientinfo = (Patient) intent.getExtras().get(VitaltimesActivity.PATIENT);
+		}
+		TextView textView = (TextView) findViewById(R.id.textViewArrivaltimes);
+		String arrivalmap = this.patientinfo.getVitalsigns().keySet().toString();
+		textView.setText(arrivalmap);
 	}
 
 	@Override
@@ -40,19 +46,18 @@ public class ArrivaltimesActivity extends Activity {
 
 	public void goBack(View view) {
 		Intent intentback = new Intent(this, PatientActivity.class);
+		intentback.putExtra(PATIENT, patientinfo);
+		intentback.putExtra("caller", "ArrivalimesActivity");
 		startActivity(intentback);
 	}	
 	
-	public void viewVitaltimes(View view) {
+	public void viewVitaltimes(View view) throws IOException {
 		Intent intentnext = new Intent(this, VitaltimesActivity.class);
 		//gets desired arrival time
 		EditText editText = (EditText) findViewById(R.id.editTextArrivalinfo);
-		intentnext.putExtra(ARRIVALTIME, editText.getText());
-		
-		Nurse nurse = new Nurse();
-		nurse.lookupPatient(patientdocs, healthcardnum);
-		intentnext.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
-		
+		intentnext.putExtra(ARRIVALTIME, editText.getText().toString());
+		intentnext.putExtra(PATIENT, patientinfo);
+		intentnext.putExtra("caller", "ArrivaltimesActivity");
 		startActivity(intentnext);
 	}
 }
