@@ -162,9 +162,8 @@ public class Organizer {
 				vitals = hcnToPatient.get(hcn).getVitalsigns();
 				output = hcn + " ";
 				for (String toa: vitals.keySet()) {
-					output = output + toa + ",";
 					for (String vitaltime: vitals.get(toa).keySet()) {
-						output = output + vitaltime + ",";
+						output = output + toa + "," + vitaltime + ",";
 						for (Object data: vitals.get(toa).get(vitaltime)) {
 							output = output + data + ",";
 						}
