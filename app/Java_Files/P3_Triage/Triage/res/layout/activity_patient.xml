@@ -1,0 +1,104 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
+
+  <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/updatevitals"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:onClick="updateVitals"
+            android:text="Update Vitals"
+            android:textSize="15dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:onClick="goBack"
+            android:text="Back"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/patientname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/updatevitals"
+            android:layout_marginTop="8dp"
+            android:text="Name: "
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/patientdob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patientname"
+            android:layout_marginTop="8dp"
+            android:text="Date of Birth: "
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/patienthcn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patientdob"
+            android:layout_marginTop="8dp"
+            android:text="Health Card Number: "
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/patientdoctime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patienthcn"
+            android:layout_marginTop="8dp"
+            android:text="Times Seen by Doctor: "
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/textPatientdoctime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patientdoctime"
+            android:layout_marginTop="8dp"
+            android:textSize="15dp" />
+        
+        <TextView
+            android:id="@+id/patientprescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textPatientdoctime"
+            android:layout_marginTop="8dp"
+            android:text="Prescription: "
+            android:textSize="15dp" />
+        
+        <TextView
+            android:id="@+id/textPrescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patientprescription"
+            android:layout_marginTop="8dp"
+            android:textSize="15dp" />
+        
+      
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:textSize="15sp">
+    </ListView>
+
+</LinearLayout>
