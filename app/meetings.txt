@@ -1,0 +1,129 @@
+October 27 - Planning Meeting
+
+Current State:
+- 2 different crc card designs
+- Decided on one crc card design
+
+Tasks:
+- Wayne and Anders will upload their Phase I when group repo is available
+- Eugene and Yuchen will upload their Phase I when group repo is available
+- Eugene will create Phase II file with the crc card design that everyone has agreed on implementing
+- Create facebook group for online meetings
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+October 29 - Planning Meeting
+
+Current State:
+- Task 1 completed
+- Uploaded to repo
+
+Tasks:
+- Creating the android app, xml (Eugene)
+- Patient class to be created (Anders)
+- Nurse class to be created (Wayne)
+- Main organizer to be created (Yuchen)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+November 3 - Status Meeting
+
+Anders:
+-  1st draft of Patient class
+-  Debugging
+
+Eugene:
+- Finished Main, and Patient activity
+- Adding more activities based on group decision
+
+Wayne:
+- Finished most methods of Nurse class
+- Adding lookup and viewPatient methods
+
+Yuchen:
+- Has an idea of the organizer
+- Waiting for Nurse and Patient class to start implementing organizer class
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+November 5 - Status Meeting
+
+Anders:
+- Modified Patient class
+- Finished debugging/testing
+- Working with Wayne to test Nurse class
+
+Eugene:
+- Added all additional Activities
+- Adding javadoc to prepare for implementation of other classes
+
+Wayne:
+- Nurse methods finished
+- Debugging with Anders
+
+Yuchen:
+- Starting to implement Organizer with Nurse and Patient classes
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+November 12 - Planning Meeting
+
+Current State:
+- Phase II Complete
+- Patient, Nurse, Organizer classes to be updated
+
+Tasks:
+- Create Physician class (Anders)
+- Adding method to add patients (Wayne)
+- Complete new crc-cards (Yuchen)
+- Add and implement new Activities discussed (Eugene)
+- Fix Organizer class (Yuchen)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+November 17 - Status Meeting
+
+Anders:
+- Finished Physician class
+- Fixing Patient's implementation with Organizer
+
+Eugene:
+- Finished adding additional Activities
+- Working on their implementation with other classes
+
+Wayne:
+- Added new methods to Nurse class
+- Working with Yuchen on the implementation of Nurse and Organizer classes
+
+Yuchen:
+- Fixed Organizer
+- Testing Organizer
+- Working with Wayne on implementation of Nurse and Organizer classes
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+November 19 - Planning Meeting
+
+Current State:
+- Activities are ready for implementation
+- App works, but not phase 3 ready
+
+Tasks:
+- Triage has an unkown bug with Organizer (Yuchen, Anders)
+- Nurse needs to be adjusted to match with Patient class (Anders, Wayne)
+- Javadoc needs to be added (Eugene)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+November 24 - Status Meeting
+
+Anders:
+- Fixed Organizer
+- Changed/added methods to the Activities to run smoother and more easily
+- Worked with Wayne to fix Nurse class
+- Added javadocs to physician class
+
+Eugene:
+- Finished typing up meetings.txt
+- Finished adding javadocs to Activities
+- Finished implementation of other classes
+
+Wayne:
+- Worked with Anders to fix Nurse class
+- Finished javadocs for Nurse class
+
+Yuchen:
+- Fixed savedata method in Organizer
+- Added javadocs to Organizer class
