@@ -16,11 +16,13 @@ public class Nurse extends User {
 	private Organizer organizer;
 	private File records;
 	private File vitals;
+	private File doctimes;
 
 	public Nurse(File dir) throws IOException {
 		organizer = Organizer.getInstance(dir);
 		records = new File(dir, "patient_records.txt");
 		vitals = new File(dir, "patient_vitals.txt");
+		doctimes = new File(dir, "patient_doctimes.txt");
 		this.patientlist = organizer.getHcnToPatient();
 	}
 
@@ -67,9 +69,16 @@ public class Nurse extends User {
 	 * Nurse can record date and time when the patient is seen by a doctor
 	 * 
 	 * @param dateandtime
+	 * @throws FileNotFoundException
 	 */
-	public void seenByDoctor(String dateandtime) {
+	public void setTimeSeenByDoctor(String dateandtime) throws FileNotFoundException {
 		this.patient.setSeenbydoctor(dateandtime);
+		FileOutputStream os = new FileOutputStream(doctimes);
+		organizer.saveTimesSeenByDoctor(os);
+	}
+	
+	public String getTimeSeenByDoctor() {
+		return this.patient.getSeenbydoctor();
 	}
 
 	/**
@@ -112,12 +121,12 @@ public class Nurse extends User {
 		return this.patient.getVitalsigns();
 	}
 
-	public Map<Integer, ArrayList<Patient>> notseenbydoctor() {
+	public TreeMap<Integer, ArrayList<Patient>> notseenbydoctor() {
 		TreeMap<Integer, ArrayList<Patient>> map = new TreeMap<Integer, ArrayList<Patient>>(
 				Collections.reverseOrder());
 		for (String hcn : this.patientlist.keySet()) {
 			Patient p = this.patientlist.get(hcn);
-			if (p.getSeenbydoctor().toString().equals("[]")) {
+			if (p.getSeenbydoctor().equals("")) {
 				if (map.keySet().contains(p.getUrgency())) {
 					map.get(p.getUrgency()).add(p);
 				} else {
@@ -139,7 +148,7 @@ public class Nurse extends User {
 		Nurse nurse = new Nurse(dir);
 		nurse.addPatient("Anders Leung", "1995-06-16", "123123");
 		nurse.lookupPatient("123123");
-		//nurse.newVisitRecord("2014-11-25 11:30", "11:40", 23.0, 120,
+		// nurse.newVisitRecord("2014-11-25 11:30", "11:40", 23.0, 120,
 		// "diastolic", 10);
 		Nurse nurse1 = new Nurse(dir);
 		System.out.println(nurse1.getPatientlist().get("123123").age);
@@ -155,7 +164,8 @@ public class Nurse extends User {
 		}
 		System.out.println(patients);
 		String arrivaltime = "2014-11-25 11:30";
-		arrivaltime = arrivaltime.substring(0, 10) + "-" + arrivaltime.substring(11, arrivaltime.length() - 1);
+		arrivaltime = arrivaltime.substring(0, 10) + "-"
+				+ arrivaltime.substring(11, arrivaltime.length() - 1);
 		System.out.println(arrivaltime);
 	}
 }

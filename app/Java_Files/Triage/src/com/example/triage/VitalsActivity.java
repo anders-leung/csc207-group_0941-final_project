@@ -7,6 +7,7 @@ import java.util.HashSet;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,8 +51,19 @@ public class VitalsActivity extends Activity {
 		textViewDob.setText(patientinfo.dob);
 		TextView textViewHcn = (TextView) findViewById(R.id.textHealthcardnum);
 		textViewHcn.setText(patientinfo.hcn);
-		TextView textTimeSeenByDoctor = (TextView) findViewById(R.id.textPatientdoctime);
-		textTimeSeenByDoctor.setText(patientinfo.getSeenbydoctor());
+		TextView timeseenbydoctor = (TextView) findViewById(R.id.textPatientdoctime);
+		if (patientinfo.getSeenbydoctor().isEmpty()) {
+			timeseenbydoctor.setText("Not yet seen by a doctor.");
+		} else {
+			String[] times = patientinfo.getSeenbydoctor().split(",");
+			String doctimes = "";
+			for (String time : times) {
+				doctimes += time.substring(0, 10) + " "
+						+ time.substring(11, time.length()) + ", ";
+			}
+			
+			timeseenbydoctor.setText(doctimes.substring(0, doctimes.length() - 2));
+		}
 	}
 
 	@Override
@@ -103,6 +115,7 @@ public class VitalsActivity extends Activity {
 			}
 		} else {
 			if (timeOfArrival.matches("")) {
+				Log.v("VitalsActivity", "time of arrival is empty");
 				timeOfArrival = patientinfo.getVitalsigns().descendingKeySet()
 						.first();
 				String timeVitalsTaken = patientinfo.getVitalsigns()
@@ -130,7 +143,7 @@ public class VitalsActivity extends Activity {
 						temperature, bloodPressure, measurement, heartRate);
 			}
 		}
-		nurse.seenByDoctor(timeSeenByDoctor);
+		nurse.setTimeSeenByDoctor(timeSeenByDoctor);
 		File dir = new File(this.getApplicationContext().getFilesDir()
 				.getPath());
 		nurse = new Nurse(dir);

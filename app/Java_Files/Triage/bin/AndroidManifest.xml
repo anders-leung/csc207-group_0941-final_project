@@ -40,7 +40,7 @@
         </activity>
         <activity
             android:name="com.example.triage.UrgencyListActivity"
-            android:label="@string/title_activity_seen_by_doc" >
+            android:label="@string/title_activity_urgency_list" >
         </activity>
         <activity
             android:name="com.example.triage.PhysicianActivity"

@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
             android:onClick="sortByUrgency"
             android:textSize="15dp"
-            android:text="Sort by Urgency" >
+            android:text="Not Seen By a Doctor" >
         </Button>
     </RelativeLayout>
 

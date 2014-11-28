@@ -17,7 +17,7 @@ public class Organizer {
 	private Organizer(File dir) throws IOException {
 		File records = new File(dir, "patient_records.txt");
 		File vitals = new File(dir, "patient_vitals.txt");
-		File symptoms = new File(dir, "patient_symptoms.txt");
+		File doctimes = new File(dir, "patient_doctimes.txt");
 		File prescription = new File(dir, "patient_prescription.txt");
 		if (records.exists()) {
 			this.populatePatients(records.getPath());
@@ -29,15 +29,15 @@ public class Organizer {
 		} else {
 			vitals.createNewFile();
 		}
-		if (symptoms.exists()) {
-			this.readSymptoms(symptoms.getPath());
+		if (doctimes.exists()) {
+			this.readTimesSeenByDoctor(doctimes.getPath());;
 		} else {
-			vitals.createNewFile();
+			doctimes.createNewFile();
 		}
 		if (prescription.exists()) {
 			this.readPrescription(prescription.getPath());
 		} else {
-			vitals.createNewFile();
+			prescription.createNewFile();
 		}
 	}
 
@@ -132,38 +132,29 @@ public class Organizer {
 
 	}
 
-	/**
-	 * Reads a description of patients' symptoms from a file and saves them.
-	 * 
-	 * @param path
-	 *            - The path of the file to read from.
-	 * @throws FileNotFoundException
-	 */
-	private void readSymptoms(String path) throws FileNotFoundException {
+	private void readTimesSeenByDoctor(String path)
+			throws FileNotFoundException {
 
 		Scanner scanner = new Scanner(new FileInputStream(path));
+		String[] timesSeenByDoctor;
 		Patient patient;
-		String[] symptomData;
-		String[] info;
 		String hcn;
-		String time;
-		String description;
+		String times;
 
 		while (scanner.hasNextLine()) {
-			symptomData = scanner.nextLine().split(" ");
-			hcn = symptomData[0];
-			patient = hcnToPatient.get(hcn);
-
-			for (int i = 1; i < symptomData.length; i++) {
-				info = symptomData[i].split(",");
-				time = info[0];
-				description = info[1];
-				patient.setSymptoms(time, description);
-
+			String line = scanner.nextLine();
+			System.out.println(line);
+			timesSeenByDoctor = line.split(" ");
+			hcn = timesSeenByDoctor[0];
+			if (timesSeenByDoctor.length == 1) {
+				times = "";
+			} else {
+				times = timesSeenByDoctor[1];	
 			}
+			patient = hcnToPatient.get(hcn);
+			patient.setSeenbydoctor(times);
 		}
 		scanner.close();
-
 	}
 
 	/**
@@ -286,6 +277,31 @@ public class Organizer {
 
 	}
 
+	public void saveTimesSeenByDoctor(FileOutputStream outputStream)
+			throws FileNotFoundException {
+
+		String output;
+		String doctimes;
+		TreeMap<String, String> patienttimes = new TreeMap<String, String>();
+
+		for (String hcn : hcnToPatient.keySet()) {
+			String times = hcnToPatient.get(hcn).getSeenbydoctor();
+			patienttimes.put(hcn, times);
+		}
+		try {
+			for (String hcn : patienttimes.keySet()) {
+				doctimes = patienttimes.get(hcn);
+				output = hcn + " " + doctimes + " ";
+
+				outputStream.write((output + System
+						.getProperty("line.separator")).getBytes());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	/**
 	 * Writes all patients with their personal information to a file.
 	 * 
@@ -335,11 +351,11 @@ public class Organizer {
 
 	public static void main(String[] args) throws IOException {
 		File dir = new File("C:\\Users\\Anders\\Desktop");
-		Organizer organizer = new Organizer(dir);
-		Patient patient = organizer.getHcnToPatient().get("111111");
-		File file = new File(dir, "patient_vitals.txt");
-		FileOutputStream os = new FileOutputStream(file);
-		organizer.saveData(os);
-		System.out.println(patient.getVitalsigns().get("2014-11-2312:45"));
+		Nurse nurse = new Nurse(dir);
+		nurse.lookupPatient("111111");
+		nurse.setTimeSeenByDoctor("2014-11-27 11:45");
+		Nurse nurse1 = new Nurse(dir);
+		nurse1.lookupPatient("111111");
+		System.out.println(nurse1.getTimeSeenByDoctor());
 	}
 }

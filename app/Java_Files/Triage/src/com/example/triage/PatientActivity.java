@@ -25,7 +25,7 @@ public class PatientActivity extends Activity {
 	private ListView listView;
 	private Nurse nurse;
 	private String timeseenbydoctor;
-	private TextView doctime;
+	private File dir;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +38,14 @@ public class PatientActivity extends Activity {
 		if (caller.equals("MainActivity")) {
 			patientinfo = (Patient) intent.getExtras()
 					.get(MainActivity.PATIENT);
+		} else if (caller.equals("UrgencyListActivity")) {
+			patientinfo = (Patient) intent.getExtras().get(
+					UrgencyListActivity.PATIENT);
 		} else {
 			patientinfo = (Patient) intent.getExtras().get(
-					VitalsActivity.PATIENT);
+					PatientActivity.PATIENT);
 		}
-
-		File dir = new File(this.getApplicationContext().getFilesDir()
-				.getPath());
+		dir = new File(this.getApplicationContext().getFilesDir().getPath());
 		try {
 			nurse = new Nurse(dir);
 			nurse.lookupPatient(patientinfo.hcn);
@@ -62,30 +63,19 @@ public class PatientActivity extends Activity {
 		TextView hcn = (TextView) findViewById(R.id.patienthcn);
 		hcn.setText("Health Card Number: " + patientinfo.hcn);
 
-		doctime = (TextView) findViewById(R.id.textpatientdoctime);
-		timeseenbydoctor = patientinfo.getSeenbydoctor();
-
-		Thread t = new Thread() {
-
-			@Override
-			public void run() {
-				try {
-					while (!isInterrupted()) {
-						Thread.sleep(1000);
-						runOnUiThread(new Runnable() {
-							@Override
-							public void run() {
-								doctime.setText("Times seen by doctor: "
-										+ timeseenbydoctor);
-							}
-						});
-					}
-				} catch (InterruptedException e) {
-				}
+		TextView timeseenbydoctor = (TextView) findViewById(R.id.textpatientdoctime);
+		if (patientinfo.getSeenbydoctor().isEmpty()) {
+			timeseenbydoctor.setText("Not yet seen by a doctor.");
+		} else {
+			String[] times = patientinfo.getSeenbydoctor().split(",");
+			String doctimes = "";
+			for (String time : times) {
+				doctimes += time.substring(0, 10) + " "
+						+ time.substring(11, time.length()) + ", ";
 			}
-		};
-
-		t.start();
+			
+			timeseenbydoctor.setText(doctimes.substring(0, doctimes.length() - 2));
+		}
 
 		TextView prescription = (TextView) findViewById(R.id.textPrescription);
 		String prescriptions = patientinfo.getPrescription();
@@ -154,10 +144,16 @@ public class PatientActivity extends Activity {
 		}
 	}
 
-	public void seenByDoctor(View v) {
+	public void seenByDoctor(View v) throws IOException {
 		EditText editseenbydoctor = (EditText) findViewById(R.id.editDoctime);
 		timeseenbydoctor = editseenbydoctor.getText().toString();
-		nurse.seenByDoctor(timeseenbydoctor);
+		nurse.setTimeSeenByDoctor(timeseenbydoctor);
+		Intent intent = new Intent(this, PatientActivity.class);
+		intent.putExtra(PATIENT, patientinfo);
+		intent.putExtra("caller", "PatientActivity");
+		Toast.makeText(getApplicationContext(), "Saving...",
+				Toast.LENGTH_LONG).show();
+		startActivity(intent);
 	}
 
 	public void logout() {

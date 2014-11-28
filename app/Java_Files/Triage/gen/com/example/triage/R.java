@@ -90,7 +90,7 @@ public final class R {
         public static final int patient=0x7f070003;
         public static final int physician=0x7f070004;
         public static final int physician_main=0x7f070005;
-        public static final int seen_by_doc=0x7f070006;
+        public static final int urgency_list=0x7f070006;
         public static final int user=0x7f070007;
         public static final int vitals=0x7f070008;
     }
@@ -104,7 +104,7 @@ public final class R {
         public static final int title_activity_patient=0x7f050004;
         public static final int title_activity_physician=0x7f050009;
         public static final int title_activity_physician_main=0x7f05000b;
-        public static final int title_activity_seen_by_doc=0x7f050008;
+        public static final int title_activity_urgency_list=0x7f050008;
         public static final int title_activity_user=0x7f050006;
         public static final int title_activity_vitals=0x7f050005;
     }

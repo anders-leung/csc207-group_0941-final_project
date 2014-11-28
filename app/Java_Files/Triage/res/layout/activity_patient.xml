@@ -68,10 +68,10 @@
 
         <TextView
             android:id="@+id/textpatientdoctime"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/patientdoctime"
-            android:layout_marginTop="8dp"
+            android:layout_alignParentLeft="true"
             android:text=""
             android:textSize="15dp" />
 

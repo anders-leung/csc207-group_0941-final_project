@@ -9,7 +9,7 @@
  	<string name="title_activity_vitals">Vital Signs</string>
     <string name="title_activity_user">Login</string>
     <string name="title_activity_new_patient">New Patient Record</string>
-    <string name="title_activity_seen_by_doc">SeenByDocActivity</string>
+    <string name="title_activity_urgency_list">Patients Not Seen By a Doctor</string>
     <string name="title_activity_physician">Patient Records</string>
     <string name="title_activity_new_prescription">New Prescription</string>
     <string name="title_activity_physician_main">Physician</string>

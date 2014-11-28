@@ -1,6 +1,5 @@
 package com.example.triage;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class Patient implements Serializable {
 	 * A list that takes a list of numbers that represent the temperature, blood
 	 * pressure and heart rate of the patient.
 	 */
-	private TreeMap<String, TreeMap<String, ArrayList<Object>>> vitalsigns;
+	private TreeMap<String, TreeMap<String, ArrayList<Object>>> vitalsigns = new TreeMap<String, TreeMap<String, ArrayList<Object>>>();
 
 	/**
 	 * Constructs Patient with identifier "hcn" final attributes like name, date
@@ -123,7 +122,11 @@ public class Patient implements Serializable {
 		if (this.seenbydoctor.isEmpty()) {
 			return "";
 		} else {
-			return this.seenbydoctor.get(0);
+			String times = "";
+			for (String time : this.seenbydoctor) {
+				times += time + ", ";
+			}
+			return times.substring(0, times.length() - 2);
 		}
 	}
 
@@ -135,9 +138,11 @@ public class Patient implements Serializable {
 	 *            doctor.
 	 */
 	public void setSeenbydoctor(String timeseenbydoctor) {
-		if (timeseenbydoctor.isEmpty()) {
+		if (timeseenbydoctor.trim().isEmpty()) {
 			return;
 		} else {
+			timeseenbydoctor = timeseenbydoctor.substring(0, 10) + "-"
+					+ timeseenbydoctor.substring(11, timeseenbydoctor.length());
 			this.seenbydoctor.add(0, timeseenbydoctor);
 		}
 	}
@@ -303,15 +308,12 @@ public class Patient implements Serializable {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File dir = new File("C:\\Users\\Anders\\Desktop");
-		Nurse nurse = new Nurse(dir);
-		Patient anders = nurse.lookupPatient("123123");
-		anders.setVitalsigns("2014-11-23 11:35", "2014-11-23 11:50", 25.5, 100,
-				"diastolic", 10);
-		System.out.println(anders.getVitalSignsString());
-		anders.setVitalsigns("2014-11-23 11:35", "2014-11-23 15:20", 34.3, 80,
-				"diastolic", 10);
-		System.out.println(anders.getVitalsigns());
-		System.out.println(anders.getVitalSignsString().split(",")[0]);
+		Patient patient = new Patient("Anders Leung", "1995-06-16", "123123");
+		patient.setSeenbydoctor("2014-11-12 11:35");
+		System.out.println(patient.seenbydoctor.get(0));
+		System.out.println(patient.getSeenbydoctor());
+		String timeseenbydoctor = "2014-11-11 11:11";
+		timeseenbydoctor = timeseenbydoctor.substring(0, 10) + "-"
+				+ timeseenbydoctor.substring(11, timeseenbydoctor.length());
 	}
 }

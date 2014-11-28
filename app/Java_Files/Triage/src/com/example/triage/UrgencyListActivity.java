@@ -3,11 +3,12 @@ package com.example.triage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
+import java.util.TreeMap;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,20 +23,18 @@ public class UrgencyListActivity extends Activity {
 	public final static String PATIENT = "PatientInfo";
 	private ListView listView;
 	private Nurse nurse;
-	private Map<Integer, ArrayList<Patient>> patientlist;
+	private TreeMap<Integer, ArrayList<Patient>> patientlist;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_urgency_list);
-
 		File dir = new File(this.getApplicationContext().getFilesDir()
 				.getPath());
 		try {
 			nurse = new Nurse(dir);
 			patientlist = nurse.notseenbydoctor();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -46,8 +45,7 @@ public class UrgencyListActivity extends Activity {
 		String patients = "";
 		for (ArrayList<Patient> a : patientlist.values()) {
 			for (Patient patient : a) {
-				patients += "								  				"
-						+ "									Urgency Points: "
+				patients += "								  				" + "									Urgency Points: "
 						+ patient.getUrgency()
 						+ System.getProperty("line.separator")
 						+ patient.toString() + ",";
@@ -55,7 +53,9 @@ public class UrgencyListActivity extends Activity {
 		}
 
 		String[] values = patients.split(",");
-
+		for (String records : values) {
+			Log.v("UrgencyListActivity", records);
+		}
 		// Define a new Adapter
 		// First parameter - Context
 		// Second parameter - Layout for the row
@@ -98,7 +98,7 @@ public class UrgencyListActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.seen_by_doc, menu);
+		getMenuInflater().inflate(R.menu.urgency_list, menu);
 		return true;
 	}
 
@@ -106,7 +106,6 @@ public class UrgencyListActivity extends Activity {
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
-	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -117,7 +116,7 @@ public class UrgencyListActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	public void logout() {
 		Intent intent = new Intent(this, UserActivity.class);
 		Toast.makeText(getApplicationContext(), "Logging out...",

@@ -62,13 +62,18 @@ public class PhysicianActivity extends Activity {
 		TextView hcn = (TextView) findViewById(R.id.patienthcn);
 		hcn.setText("Health Card Number: " + patientinfo.hcn);
 
-		TextView doctime = (TextView) findViewById(R.id.textPatientdoctime);
-		String timeseenbydoctor = patientinfo.getSeenbydoctor().toString();
-		if (timeseenbydoctor.equals("[]")) {
-			doctime.setText("Not yet seen by a doctor.");
+		TextView timeseenbydoctor = (TextView) findViewById(R.id.textPatientdoctime);
+		if (patientinfo.getSeenbydoctor().isEmpty()) {
+			timeseenbydoctor.setText("Not yet seen by a doctor.");
 		} else {
-			doctime.setText(timeseenbydoctor.substring(1,
-					timeseenbydoctor.length() - 1));
+			String[] times = patientinfo.getSeenbydoctor().split(",");
+			String doctimes = "";
+			for (String time : times) {
+				doctimes += time.substring(0, 10) + " "
+						+ time.substring(11, time.length()) + ", ";
+			}
+			
+			timeseenbydoctor.setText(doctimes.substring(0, doctimes.length() - 2));
 		}
 		
 		TextView prescription = (TextView) findViewById(R.id.textPrescription);
@@ -128,7 +133,7 @@ public class PhysicianActivity extends Activity {
 	}
 
 	public void goBack(View v) {
-		Intent intent = new Intent(this, MainActivity.class);
+		Intent intent = new Intent(this, PhysicianMainActivity.class);
 		startActivity(intent);
 	}
 	
