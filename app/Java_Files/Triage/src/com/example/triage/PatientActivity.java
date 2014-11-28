@@ -1,71 +1,127 @@
 package com.example.triage;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.File;
+import java.io.IOException;
 
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PatientActivity extends Activity {
-	
-	Intent intent = getIntent();
-	Patient patientinfo = (Patient) intent.getExtras().getSerializable("Patient_info");
-	SharedPreferences patient = getSharedPreferences("com.example.triage", 0);
-	String healthcardnum = patient.getString("healhcardnumber", "N/A");
-	//HashMap<String, Patient> patientdocs = Organizer.getHcnToPatient();
-	
+
+	public final static String PATIENT = "PatientInfo";
+	private Intent intent;
+	private Patient patientinfo;
+	private ListView listView;
+	private Nurse nurse;
+	private String timeseenbydoctor;
+	private TextView doctime;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);	
-		
-		String name = patientinfo.name;
-		String dob = patientinfo.dob;
-		
-		//Object[] arrivalmap = patientinfo.getVitalsigns().keySet().toArray();
-		//String arrivaltime = arrivalmap[arrivalmap.length-1].toString();
-		
-		//Object[] vitalmap = patientinfo.getVitalsigns().get(arrivalmap).keySet().toArray();
-		//String vitaltime = vitalmap[vitalmap.length-1].toString();
-		
-		//Number temperature = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(0);
-		//Number bloodpressure = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(1);
-		//Number heartrate = patientinfo.getVitalsigns().get(arrivalmap).get(vitaltime).get(2);
-		
-		// setting the text views
-		TextView textViewName = (TextView) findViewById(R.id.textViewName);
-		textViewName.setText(name);
-		
-		TextView textViewDob = (TextView) findViewById(R.id.textViewDob);
-		textViewDob.setText(dob);
-		
-		TextView textViewHealthcardnum = (TextView) findViewById(R.id.textViewHealthcardnum);
-		textViewHealthcardnum.setText(healthcardnum);
-		
-		TextView textViewArrivaltime = (TextView) findViewById(R.id.textViewArrivaltime);
-		//textViewArrivaltime.setText(arrivaltime);
-		
-		TextView textViewTemperature = (TextView) findViewById(R.id.textViewTemperature);
-		//textViewTemperature.setText(temperature.toString());
-		
-		TextView textViewBloodpressure = (TextView) findViewById(R.id.textViewBloodpressure);
-		//textViewBloodpressure.setText(bloodpressure.toString());
-		
-		TextView textViewHeartrate = (TextView) findViewById(R.id.textViewHeartrate);
-		//textViewHeartrate.setText(heartrate.toString());
-		
-		TextView textViewVitaltime = (TextView) findViewById(R.id.textViewVitaltime);
-		//textViewVitaltime.setText(vitaltime);
-		
+		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_patient);
+
+		intent = getIntent();
+		String caller = intent.getStringExtra("caller");
+
+		if (caller.equals("MainActivity")) {
+			patientinfo = (Patient) intent.getExtras()
+					.get(MainActivity.PATIENT);
+		} else {
+			patientinfo = (Patient) intent.getExtras().get(
+					VitalsActivity.PATIENT);
+		}
+
+		File dir = new File(this.getApplicationContext().getFilesDir()
+				.getPath());
+		try {
+			nurse = new Nurse(dir);
+			nurse.lookupPatient(patientinfo.hcn);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		TextView name = (TextView) findViewById(R.id.patientname);
+		name.setText("Name: " + patientinfo.name);
+
+		TextView dob = (TextView) findViewById(R.id.patientdob);
+		dob.setText("Date of Birth: " + patientinfo.dob);
+
+		TextView hcn = (TextView) findViewById(R.id.patienthcn);
+		hcn.setText("Health Card Number: " + patientinfo.hcn);
+
+		doctime = (TextView) findViewById(R.id.textpatientdoctime);
+		timeseenbydoctor = patientinfo.getSeenbydoctor();
+
+		Thread t = new Thread() {
+
+			@Override
+			public void run() {
+				try {
+					while (!isInterrupted()) {
+						Thread.sleep(1000);
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								doctime.setText("Times seen by doctor: "
+										+ timeseenbydoctor);
+							}
+						});
+					}
+				} catch (InterruptedException e) {
+				}
+			}
+		};
+
+		t.start();
+
+		TextView prescription = (TextView) findViewById(R.id.textPrescription);
+		String prescriptions = patientinfo.getPrescription();
+		if (prescriptions.isEmpty()) {
+			prescription.setText("Patient has no prescription.");
+		} else {
+			prescription.setText(prescriptions);
+		}
+
+		// Get ListView object from xml
+		listView = (ListView) findViewById(R.id.list);
+
+		// Defined Array values to show in ListView
+		String[] values = patientinfo.getVitalSignsString().split(",");
+
+		// Define a new Adapter
+		// First parameter - Context
+		// Second parameter - Layout for the row
+		// Third parameter - ID of the TextView to which the data is written
+		// Fourth - the Array of data
+
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_list_item_2, android.R.id.text2, values);
+
+		// Assign adapter to ListView
+		listView.setAdapter(adapter);
+
+		// ListView Item Click Listener
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+
+			}
+		});
 	}
 
 	@Override
@@ -74,46 +130,40 @@ public class PatientActivity extends Activity {
 		getMenuInflater().inflate(R.menu.patient, menu);
 		return true;
 	}
-	
-	public void goBack() {
+
+	public void updateVitals(View v) {
+		Intent intent = new Intent(this, VitalsActivity.class);
+		intent.putExtra(PATIENT, patientinfo);
+		Toast.makeText(getApplicationContext(), "Loading page...",
+				Toast.LENGTH_SHORT).show();
+		startActivity(intent);
+	}
+
+	public void goBack(View v) {
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 	}
-	
-	public void Save() throws FileNotFoundException {
-		
-		// gets all the new imputs
-		EditText editTextArrivaltime = (EditText) findViewById(R.id.editTextArrivaltime);
-		String arrivaltime = editTextArrivaltime.getText().toString();
-		
-		EditText editTextTemperature = (EditText) findViewById(R.id.editTextTemperature);
-		double temp = Double.parseDouble(editTextTemperature.getText().toString());
-		
-		EditText editTextBloodpressure = (EditText) findViewById(R.id.editTextBloodpressure);
-		int bp = Integer.parseInt(editTextBloodpressure.getText().toString());
-		
-		EditText editTextHeartrate = (EditText) findViewById(R.id.editTextHeartrate);
-		int hr = Integer.parseInt(editTextHeartrate.getText().toString());
-		
-		EditText editTextVitaltime = (EditText) findViewById(R.id.editTextVitaltime);
-		String vitaltime = editTextVitaltime.getText().toString();
-		
-		//patientinfo.setVitalsigns(arrivaltime,vitaltime,temp,bp,hr);
-		
-		// method for saving here
-		
-		// After save, goes back to the main menu
-		//Organizer.saveData();
-		
-		Intent intentback = new Intent(this, MainActivity.class);
-		startActivity(intentback);
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_logout) {
+			logout();
+			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
+		}
 	}
-	
-	public void viewArrivaltimes(View view) {
-		Intent intentnext = new Intent(this, ArrivaltimesActivity.class);
-		//Nurse nurse = new Nurse();
-		//nurse.lookupPatient(patientdocs, healthcardnum);
-		//intentnext.putExtra("Patient_info", nurse.lookupPatient(patientdocs, healthcardnum));
-		startActivity(intentnext);
+
+	public void seenByDoctor(View v) {
+		EditText editseenbydoctor = (EditText) findViewById(R.id.editDoctime);
+		timeseenbydoctor = editseenbydoctor.getText().toString();
+		nurse.seenByDoctor(timeseenbydoctor);
+	}
+
+	public void logout() {
+		Intent intent = new Intent(this, UserActivity.class);
+		Toast.makeText(getApplicationContext(), "Logging out...",
+				Toast.LENGTH_LONG).show();
+		startActivity(intent);
 	}
 }

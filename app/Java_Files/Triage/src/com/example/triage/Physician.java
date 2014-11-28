@@ -1,15 +1,22 @@
 package com.example.triage;
 
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Map;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.TreeMap;
 
 public class Physician extends User {
 	
 	private Patient patient;
-	private Map<String, Patient> patientlist;
+	private TreeMap<String, Patient> patientlist;
+	private Organizer organizer;
+	private File prescriptions;
 	
-	public Physician() throws FileNotFoundException {
-		this.patientlist = Organizer.getHcnToPatient();
+	public Physician(File dir) throws IOException {
+		organizer = Organizer.getInstance(dir);
+		prescriptions = new File(dir, "patient_prescriptions.txt");
+		this.patientlist = organizer.getHcnToPatient();
 	}
 	
 	public Patient lookupPatient(String hcn) {
@@ -21,7 +28,13 @@ public class Physician extends User {
 		}
 	}
 	
-	public void prescribe(String prescription) {
+	public void prescribe(String prescription) throws FileNotFoundException {
 		this.patient.setPrescription(prescription);
+		FileOutputStream os = new FileOutputStream(prescriptions);
+		organizer.savePrescriptions(os);
+	}
+	
+	public TreeMap<String, Patient> getPatientlist() {
+		return this.patientlist;
 	}
 }

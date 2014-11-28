@@ -22,16 +22,8 @@
             android:label="@string/title_activity_patient" >
         </activity>
         <activity
-            android:name="com.example.triage.PastvitalsActivity"
-            android:label="@string/title_activity_pastvitals" >
-        </activity>
-        <activity
-            android:name="com.example.triage.ArrivaltimesActivity"
-            android:label="@string/title_activity_arrivaltimes" >
-        </activity>
-        <activity
-            android:name="com.example.triage.VitaltimesActivity"
-            android:label="@string/title_activity_vitaltimes" >
+            android:name="com.example.triage.VitalsActivity"
+            android:label="@string/title_activity_vitals" >
         </activity>
         <activity
             android:name="com.example.triage.UserActivity"
